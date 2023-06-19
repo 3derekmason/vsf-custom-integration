@@ -15,4 +15,5 @@ export interface Endpoints {
   ): Promise<TODO>;
     coolEndpoint(context: BoilerplateIntegrationContext, params: TODO): Promise<TODO>;
     getProducts(context: BoilerplateIntegrationContext, params: TODO): Promise<TODO>;
+    hello(context: BoilerplateIntegrationContext, params: TODO): Promise<TODO>;
 }
