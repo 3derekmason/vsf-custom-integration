@@ -6,5 +6,5 @@ export const coolEndpoint: Endpoints['coolEndpoint'] = async (
 ) => {
   console.log('coolEndpoint has been called');
 
-  return JSON.stringify(context);
+  return { data: 'Hello from coolEndpoint' };
 };

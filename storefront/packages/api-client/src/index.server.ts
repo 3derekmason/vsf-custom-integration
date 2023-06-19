@@ -8,16 +8,16 @@ import * as apiEndpoints from './api';
  * Axios is just an example.
  */
 const buildClient = () => {
-  const axiosInstance = axios.create();
-  return axiosInstance
-}
+  const axiosInstance = axios.create({ baseURL: 'http://localhost:9000' });
+  return axiosInstance;
+};
 
 const onCreate = (settings: MiddlewareConfig) => {
   const client = buildClient();
 
   return {
     config: settings,
-    client
+    client,
   };
 };
 
