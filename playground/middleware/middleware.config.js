@@ -2,7 +2,12 @@ module.exports = {
   integrations: {
     boilerplate: {
       location: '@vue-storefront/integration-boilerplate-api/server',
-      configuration: {},
+      configuration: {
+        api: process.env.MEDUSA_API_URL || 'http://localhost:9000',
+        customOptions: {
+          maxRetries: 10,
+        },
+      },
     },
   },
 };
