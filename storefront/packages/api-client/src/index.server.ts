@@ -8,7 +8,9 @@ import * as apiEndpoints from './api';
  * Axios is just an example.
  */
 const buildClient = () => {
-  const axiosInstance = axios.create({ baseURL: 'http://localhost:9000' });
+  const axiosInstance = axios.create({
+    baseURL: process.env.MEDUSA_API_URL || 'http://localhost:9000',
+  });
   return axiosInstance;
 };
 
