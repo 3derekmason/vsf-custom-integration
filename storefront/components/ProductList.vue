@@ -26,16 +26,15 @@ interface Product {
 
 const products: Ref<Product[] | undefined> = ref([]);
 
-const endpoint = 'http://localhost:8181/medusa/getProducts';
+const config = useRuntimeConfig();
 
 const fetchProducts = async () => {
-  await fetch(endpoint, { method: 'post' })
-    .then((res) => res.json())
-    .then((data) => {
-      console.log(data);
-      products.value = data.data.products;
-      console.log(products);
-    });
+  const { data } = await useFetch('/getProducts', {
+    baseURL: config.public.apiBase,
+    method: 'post',
+  });
+
+  products.value = data.value.data.products;
 };
 
 onMounted(() => {
