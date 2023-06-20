@@ -13,7 +13,18 @@
 </template>
 
 <script setup lang="ts">
-const products = ref([]);
+interface Product {
+  id: string;
+  created_at: string;
+  description: string;
+  discountable: boolean;
+  handle: string;
+  status: string;
+  thumbnail: string;
+  title: string;
+}
+
+const products: Ref<Product[] | undefined> = ref([]);
 
 const endpoint = 'http://localhost:8181/boilerplate/getProducts';
 
