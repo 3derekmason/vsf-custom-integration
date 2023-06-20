@@ -1,22 +1,22 @@
-import { boilerplateConnector } from './connector';
+import { medusaConnector } from './connector';
 import type { Options } from './types';
 import type { Module } from '@vue-storefront/sdk';
 
 /**
  * Boulerplate module type.
  */
-export interface BoilerplateModuleType extends Module {
+export interface MedusaModuleType extends Module {
   /**
    * The connector of the Boilerplate module.
    */
-  connector: ReturnType<typeof boilerplateConnector>;
+  connector: ReturnType<typeof medusaConnector>;
 }
 
 /**
  * Boilerplate module.
  */
-export const boilerplateModule = (options: Options): BoilerplateModuleType => ({
-  connector: boilerplateConnector({
+export const medusaModule = (options: Options): MedusaModuleType => ({
+  connector: medusaConnector({
     apiUrl: options.apiUrl,
   }),
   utils: {},

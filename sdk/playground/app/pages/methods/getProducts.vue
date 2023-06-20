@@ -46,7 +46,7 @@ const res = useState('waiting to call getProducts() ...');
 const products = ref([]);
 
 async function callEndpoint() {
-  const { data } = await sdk.boilerplate.getProducts('test');
+  const { data } = await sdk.medusa.getProducts('test');
   res.value = data;
   products.value = data.products;
 }

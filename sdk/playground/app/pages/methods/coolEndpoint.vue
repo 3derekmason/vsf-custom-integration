@@ -38,7 +38,7 @@ import 'vue3-json-viewer/dist/index.css';
 const res = useState('waiting to call coolEndpoint() ...');
 
 async function callEndpoint() {
-  const { data } = await sdk.boilerplate.coolEndpoint('test');
+  const { data } = await sdk.medusa.coolEndpoint('test');
   res.value = data;
 }
 

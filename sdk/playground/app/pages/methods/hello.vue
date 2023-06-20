@@ -1,22 +1,29 @@
-
 <template>
   <div class="flex justify-center items-center h-screen">
     <div class="p-5 w-96">
       <h1 class="typography-headline-2 font-bold mt-2 mb-4 text-green-500">
         Build something amazing
       </h1>
-      <p class="text-gray-50">
-       hello()
-      </p>
+      <p class="text-gray-50">hello()</p>
       <div class="box">
         <!-- <JsonViewer :value="jsonData" copyable boxed sort theme="light"  @onKeyClick="keyClick"/> -->
         <h4 class="text-gray-50">Response</h4>
-        <JsonViewer class="min-h-[800px] min-w-[500px]" :value="res" expandDepth="5" expanded copyable boxed sort
-          theme="dark" />
+        <JsonViewer
+          class="min-h-[800px] min-w-[500px]"
+          :value="res"
+          expandDepth="5"
+          expanded
+          copyable
+          boxed
+          sort
+          theme="dark"
+        />
       </div>
       <div class="flex flex-col md:flex-row gap-4 mt-6">
         <SfButton @click="callEndpoint" size="lg"> call </SfButton>
-        <SfButton @click="reset" size="lg" variant="secondary" class="bg-white"> reset </SfButton>
+        <SfButton @click="reset" size="lg" variant="secondary" class="bg-white">
+          reset
+        </SfButton>
       </div>
     </div>
   </div>
@@ -25,17 +32,17 @@
 <script lang="ts" setup>
 import { SfButton } from '@storefront-ui/vue';
 import { sdk } from '~/sdk.config';
-import { JsonViewer } from "vue3-json-viewer"
-import "vue3-json-viewer/dist/index.css";
+import { JsonViewer } from 'vue3-json-viewer';
+import 'vue3-json-viewer/dist/index.css';
 
 const res = useState('waiting to call hello() ...');
 
 async function callEndpoint() {
-  const { data } = await sdk.boilerplate.hello('test');
-  res.value = data
+  const { data } = await sdk.medusa.hello('test');
+  res.value = data;
 }
 
 function reset() {
-  res.value = 'waiting to call hello() ...'
+  res.value = 'waiting to call hello() ...';
 }
 </script>

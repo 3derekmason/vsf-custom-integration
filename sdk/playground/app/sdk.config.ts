@@ -1,13 +1,10 @@
 import { initSDK, buildModule } from '@vue-storefront/sdk';
-import {
-  boilerplateModule,
-  BoilerplateModuleType,
-} from '../../packages/sdk/src';
+import { medusaModule, MedusaModuleType } from '../../packages/sdk/src';
 
 const sdkConfig = {
-  boilerplate: buildModule<BoilerplateModuleType>(boilerplateModule, {
-    apiUrl: 'http://localhost:8181/boilerplate',
+  medusa: buildModule<MedusaModuleType>(medusaModule, {
+    apiUrl: 'http://localhost:8181/medusa',
   }),
 };
 
-export const sdk = initSDK<typeof sdkConfig>(sdkConfig);;
+export const sdk = initSDK<typeof sdkConfig>(sdkConfig);

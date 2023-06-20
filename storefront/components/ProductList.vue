@@ -26,7 +26,7 @@ interface Product {
 
 const products: Ref<Product[] | undefined> = ref([]);
 
-const endpoint = 'http://localhost:8181/boilerplate/getProducts';
+const endpoint = 'http://localhost:8181/medusa/getProducts';
 
 const fetchProducts = async () => {
   await fetch(endpoint, { method: 'post' })
