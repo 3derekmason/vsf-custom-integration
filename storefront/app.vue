@@ -4,6 +4,19 @@
   </NuxtLayout>
 </template>
 
+<script setup lang="ts">
+import { sdk } from '../sdk/playground/app/sdk.config';
+
+const createCart = async () => {
+  const { data } = await sdk.medusa.createCart('');
+  console.log(data);
+};
+
+onMounted(() => {
+  createCart();
+});
+</script>
+
 <style>
 @tailwind base;
 @tailwind components;

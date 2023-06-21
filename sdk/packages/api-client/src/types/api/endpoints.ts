@@ -14,4 +14,5 @@ export interface Endpoints {
     context: MedusaIntegrationContext,
     params: TODO
   ): Promise<TODO>;
+  createCart(context: MedusaIntegrationContext, params: TODO): Promise<TODO>;
 }
