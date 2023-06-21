@@ -24,13 +24,6 @@
 }
 
 .mask {
-  background: linear-gradient(
-    90deg,
-    transparent,
-    10%,
-    #fed7aa,
-    90%,
-    transparent
-  );
+  background: linear-gradient(90deg, #fffbeb40, 10%, #fffbeb, 90%, #fffbeb40);
 }
 </style>
