@@ -1,15 +1,5 @@
 <template>
-  <main class="homePage">
+  <main class="homePage w-screen min-h-screen p-4">
     <ProductList />
   </main>
 </template>
-
-<style>
-.homePage {
-  width: 100vw;
-  min-height: 100vh;
-  background: #212121;
-  color: #eee;
-  padding: 4em;
-}
-</style>
