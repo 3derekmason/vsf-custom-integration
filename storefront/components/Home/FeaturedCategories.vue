@@ -2,7 +2,7 @@
   <div
     class="featured-categories w-screen h-96 bg-light-amber flex items-center justify-around p-4"
   >
-    <h2 class="w-1/6 text-4xl border-b-8 border-vivid-amber">
+    <h2 class="w-1/12 text-4xl border-b-8 border-vivid-amber">
       Featured Categories
     </h2>
     <div
