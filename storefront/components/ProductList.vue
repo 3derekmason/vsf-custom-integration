@@ -13,6 +13,7 @@
 </template>
 
 <script setup lang="ts">
+import { sdk } from '../../sdk/playground/app/sdk.config';
 interface Product {
   id: string;
   created_at: string;
@@ -26,15 +27,10 @@ interface Product {
 
 const products: Ref<Product[] | undefined> = ref([]);
 
-const config = useRuntimeConfig();
-
 const fetchProducts = async () => {
-  const { data } = await useFetch('/getProducts', {
-    baseURL: config.public.apiBase,
-    method: 'post',
-  });
+  const { data } = await sdk.medusa.getProducts('');
 
-  products.value = data.value.data.products;
+  products.value = data.products;
 };
 
 onMounted(() => {
