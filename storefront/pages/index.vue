@@ -1,5 +1,3 @@
 <template>
-  <main class="homePage w-screen min-h-screen p-4">
-    <ProductList />
-  </main>
+  <div class="homePage"></div>
 </template>

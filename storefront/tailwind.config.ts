@@ -11,9 +11,12 @@ module.exports = {
     colors: {
       transparent: 'transparent',
       white: '#ffffff',
+      black: '#000000',
       'primary-blue': '#003b5c',
       'blueish-gray': '#abb8c3',
       'vivid-amber': '#fcb900',
+      'primary-orange': '#fdba74',
+      'dull-orange': '#fed7aa',
     },
   },
 };

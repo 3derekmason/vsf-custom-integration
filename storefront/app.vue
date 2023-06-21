@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <NuxtLayout>
     <NuxtPage />
-  </div>
+  </NuxtLayout>
 </template>
 
 <style>
@@ -13,7 +13,8 @@
   box-sizing: border-box;
 }
 
-body {
+body,
+main {
   margin: 0;
   padding: 0;
   font-family: 'Montserrat', sans-serif;
