@@ -4,7 +4,7 @@
       <h1 class="typography-headline-2 font-bold mt-2 mb-4 text-green-500">
         Build something amazing
       </h1>
-      <p class="text-gray-50">coolEndpoint()</p>
+      <p class="text-gray-50">getShippingMethods()</p>
       <div class="box">
         <!-- <JsonViewer :value="jsonData" copyable boxed sort theme="light"  @onKeyClick="keyClick"/> -->
         <h4 class="text-gray-50">Response</h4>
@@ -35,14 +35,14 @@ import { sdk } from '~/sdk.config';
 import { JsonViewer } from 'vue3-json-viewer';
 import 'vue3-json-viewer/dist/index.css';
 
-const res = useState('waiting to call coolEndpoint() ...');
+const res = useState('waiting to call getShippingMethods() ...');
 
 async function callEndpoint() {
-  const { data } = await sdk.medusa.coolEndpoint('test');
+  const { data } = await sdk.medusa.getShippingMethods('test');
   res.value = data;
 }
 
 function reset() {
-  res.value = 'waiting to call coolEndpoint() ...';
+  res.value = 'waiting to call getShippingMethods() ...';
 }
 </script>

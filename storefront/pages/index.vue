@@ -1,5 +1,5 @@
 <template>
-  <div class="homePage w-full min-h-screen">
+  <div class="homePage w-full">
     <HomeHeroSection />
     <HomeFeaturedCategories />
     <HomeFeaturedFinds />

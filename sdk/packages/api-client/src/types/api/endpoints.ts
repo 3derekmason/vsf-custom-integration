@@ -8,11 +8,10 @@ export interface Endpoints {
    * Here you can find an example endpoint definition. Based on this example, you should define how your endpoint will look like.
    * This description will appear in the API extractor, so try to document all endpoints added here.
    */
-  exampleEndpoint(
+  getProducts(context: MedusaIntegrationContext, params: TODO): Promise<TODO>;
+  hello(context: MedusaIntegrationContext, params: TODO): Promise<TODO>;
+  getShippingMethods(
     context: MedusaIntegrationContext,
     params: TODO
   ): Promise<TODO>;
-  coolEndpoint(context: MedusaIntegrationContext, params: TODO): Promise<TODO>;
-  getProducts(context: MedusaIntegrationContext, params: TODO): Promise<TODO>;
-  hello(context: MedusaIntegrationContext, params: TODO): Promise<TODO>;
 }

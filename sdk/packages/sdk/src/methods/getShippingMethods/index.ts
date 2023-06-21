@@ -20,7 +20,7 @@ import { TODO } from '../../types';
  * @example
  * A short code snippet showing how to use the method. Usually we have more than one @example. We should strive for adding as many examples as possible here, with multiple param configurations.
  */
-export async function exampleMethod(props: TODO) {
-  const { data } = await client.post<TODO>('exampleEndpoint', props);
+export async function getShippingMethods(props: TODO) {
+  const { data } = await client.post<TODO>('getShippingMethods', props);
   return data
 }
