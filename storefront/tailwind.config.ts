@@ -20,6 +20,9 @@ module.exports = {
       'light-amber': '#fef3c7',
       'primary-orange': '#fdba74',
       'dull-orange': '#fed7aa',
+      'light-orange': '#fff7ed',
+      stone: '#d6d3d1',
+      'light-stone': '#e7e5e4',
     },
   },
 };

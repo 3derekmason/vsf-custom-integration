@@ -27,7 +27,7 @@
         /></SfButton>
       </div>
       <div
-        class="search flex justify-between items-center gap-1 w-1/3 h-2/3 rounded-full bg-dull-orange p-1 border-2 border-primary-orange"
+        class="search flex justify-between items-center gap-1 w-1/3 h-2/3 rounded-full bg-light-orange p-1 border-2 border-dull-orange"
       >
         <input
           class="bg-transparent min-w-4/5 ml-4 focus:outline-0"
@@ -35,7 +35,7 @@
           placeholder="Search your Farmstore"
         />
         <button
-          class="text-black bg-primary-orange rounded-full w-11 h-11 flex justify-center items-center"
+          class="text-black bg-dull-orange rounded-full w-11 h-11 flex justify-center items-center"
           type="button"
         >
           <Icon name="mdi:magnify" />
