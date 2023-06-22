@@ -1,5 +1,5 @@
 import { initSDK, buildModule } from '@vue-storefront/sdk';
-import { medusaModule, MedusaModuleType } from '../../packages/sdk/src';
+import { medusaModule, MedusaModuleType } from '../packages/sdk/src';
 
 const sdkConfig = {
   medusa: buildModule<MedusaModuleType>(medusaModule, {
