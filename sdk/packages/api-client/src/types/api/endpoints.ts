@@ -19,4 +19,5 @@ export interface Endpoints {
     context: MedusaIntegrationContext,
     params: TODO
   ): Promise<TODO>;
+  getProduct(context: MedusaIntegrationContext, params: TODO): Promise<TODO>;
 }
