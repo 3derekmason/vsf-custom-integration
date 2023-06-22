@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import { sdk } from '../../../sdk/playground/app/sdk.config';
+import { sdk } from '../../../sdk/packages/sdk.config';
 
 interface Product {
   id: string;
