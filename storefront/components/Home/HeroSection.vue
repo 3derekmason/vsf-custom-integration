@@ -8,7 +8,7 @@
       </h1>
       <p class="text-xl text-gray">Unforgettable gifts, unbeatable deals.</p>
       <NuxtLink
-        href="#"
+        href="/products"
         class="bg-primary-blue rounded-full text-lg p-4 text-white"
       >
         Discover the Mother's Day Sale

@@ -16,7 +16,9 @@
     </div>
     <div class="navbar-hero w-full h-20 flex justify-around items-center">
       <div class="logo">
-        <h1 class="text-3xl">Wilco</h1>
+        <NuxtLink to="/">
+          <h1 class="text-3xl">Wilco</h1>
+        </NuxtLink>
       </div>
       <div class="departments h-2/3 flex items-center">
         <SfButton

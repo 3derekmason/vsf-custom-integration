@@ -33,8 +33,6 @@ const featuredFinds: Ref<Product[] | undefined> = ref([]);
 const fetchProducts = async () => {
   const { data } = await sdk.medusa.getProducts('');
 
-  console.log(data.products);
-
   featuredFinds.value = data.products.slice(0, 5);
 };
 
