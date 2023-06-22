@@ -184,7 +184,7 @@ const addToCart = async () => {
     variant_id: variantId,
   };
   const { data } = await sdk.medusa.addCartLineItem(body);
-  console.log(data);
+  main.setCart(data.cart);
   selected.value = false;
   quantity.value = 1;
 };

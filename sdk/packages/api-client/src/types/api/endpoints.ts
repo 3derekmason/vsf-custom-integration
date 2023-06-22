@@ -20,4 +20,8 @@ export interface Endpoints {
     params: TODO
   ): Promise<TODO>;
   getProduct(context: MedusaIntegrationContext, params: TODO): Promise<TODO>;
+  removeLineItem(
+    context: MedusaIntegrationContext,
+    params: TODO
+  ): Promise<TODO>;
 }
