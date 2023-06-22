@@ -6,10 +6,13 @@
 
 <script setup lang="ts">
 import { sdk } from '../sdk/playground/app/sdk.config';
+import { useMainStore } from './store/main';
+
+const main = useMainStore();
 
 const createCart = async () => {
   const { data } = await sdk.medusa.createCart('');
-  console.log(data);
+  main.setCart(data.cart);
 };
 
 onMounted(() => {
