@@ -8,3 +8,4 @@ export { getProduct } from './getProduct';
 export { removeLineItem } from './removeLineItem';
 export { createCustomer } from './createCustomer';
 export { login } from './login';
+export { updateShippingAddress } from './updateShippingAddress';

@@ -13,6 +13,9 @@
       }}
     </button>
   </div>
+  <div v-else>
+    <AuthProfile />
+  </div>
 </template>
 
 <script setup lang="ts">

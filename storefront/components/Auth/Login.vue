@@ -42,6 +42,7 @@ const login = async (e: any) => {
   };
   try {
     const { data } = await sdk.medusa.login(body);
+    console.log(data);
     main.setCustomer(data.customer);
   } catch (e) {
     console.error(e);

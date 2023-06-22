@@ -29,4 +29,8 @@ export interface Endpoints {
     params: TODO
   ): Promise<TODO>;
   login(context: MedusaIntegrationContext, params: TODO): Promise<TODO>;
+  updateShippingAddress(
+    context: MedusaIntegrationContext,
+    params: TODO
+  ): Promise<TODO>;
 }
