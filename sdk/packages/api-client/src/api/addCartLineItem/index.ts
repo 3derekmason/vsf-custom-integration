@@ -9,11 +9,14 @@ export const addCartLineItem: Endpoints['addCartLineItem'] = async (
   const body = {
     variant_id: params.variant_id,
     quantity: params.quantity,
+    metadata: {
+      pickup: params.pickup,
+    },
   };
 
   const endpoint = `/store/carts/${params.id}/line-items`;
 
   console.log(body, endpoint);
-  const { data } = await context.client.post(endpoint, JSON.stringify(body));
+  const { data } = await context.client.post(endpoint, body);
   return { data: data };
 };

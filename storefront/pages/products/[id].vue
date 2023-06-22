@@ -153,7 +153,7 @@ let showDetails = ref(false);
 let imageToShow = ref();
 let quantity = ref(1);
 let selected = ref();
-let variantId = ref();
+let variantId = ref('');
 let pickup = ref(true);
 
 const getProduct = async () => {
@@ -172,14 +172,21 @@ const setVariant = (value: string) => {
   });
 };
 
-const addToCart = () => {
-  const data = {
+const addToCart = async () => {
+  if (variantId.value === '') {
+    alert('Please choose a size/variant');
+    return new Error('No Variant Id');
+  }
+  const body = {
     pickup: pickup.value,
     quantity: quantity.value,
-    cartId: main.cart.id,
-    variantId,
+    id: main.cart.id,
+    variant_id: variantId,
   };
+  const { data } = await sdk.medusa.addCartLineItem(body);
   console.log(data);
+  selected.value = false;
+  quantity.value = 1;
 };
 
 onMounted(() => {
