@@ -28,4 +28,5 @@ export interface Endpoints {
     context: MedusaIntegrationContext,
     params: TODO
   ): Promise<TODO>;
+  login(context: MedusaIntegrationContext, params: TODO): Promise<TODO>;
 }

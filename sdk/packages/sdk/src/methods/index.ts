@@ -7,3 +7,4 @@ export { addCartLineItem } from './addCartLineItem';
 export { getProduct } from './getProduct';
 export { removeLineItem } from './removeLineItem';
 export { createCustomer } from './createCustomer';
+export { login } from './login';
