@@ -27,7 +27,7 @@
 </template>
 
 <script setup lang="ts">
-import { sdk } from '../../../sdk/playground/app/sdk.config';
+import { sdk } from '../../../sdk/packages/sdk.config';
 import { useMainStore } from '~/store/main';
 const main = useMainStore();
 
