@@ -79,7 +79,6 @@ const removeItem = async (item: any) => {
   const id = main.cart.id;
   const line_id = item.id;
   const { data } = await sdk.medusa.removeLineItem({ id, line_id });
-  console.log(data);
   main.setCart(data.cart);
 };
 

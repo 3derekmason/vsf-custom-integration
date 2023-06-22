@@ -16,7 +16,6 @@ export const addCartLineItem: Endpoints['addCartLineItem'] = async (
 
   const endpoint = `/store/carts/${params.id}/line-items`;
 
-  console.log(body, endpoint);
   const { data } = await context.client.post(endpoint, body);
   return { data: data };
 };

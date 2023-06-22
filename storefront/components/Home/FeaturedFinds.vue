@@ -9,10 +9,7 @@
     >
       <img :src="product.thumbnail" class="h-1/2 border-b-2 border-gray" />
       <p class="text-center">{{ product.title }}</p>
-      <button
-        class="border-2 border-primary-blue rounded-full p-1 w-11/12"
-        @click="addItemToCart"
-      >
+      <button class="border-2 border-primary-blue rounded-full p-1 w-11/12">
         Add to Cart
       </button>
     </div>
@@ -34,15 +31,6 @@ const fetchProducts = async () => {
   const { data } = await sdk.medusa.getProducts('');
 
   featuredFinds.value = data.products.slice(0, 5);
-};
-
-const addItemToCart = async () => {
-  const { data, error } = await sdk.medusa.addCartLineItem({
-    id: 'cart_1234',
-    variant_id: 'var_4321',
-    quantity: 1,
-  });
-  console.log(data, error);
 };
 
 onMounted(() => {

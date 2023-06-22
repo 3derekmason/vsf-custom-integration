@@ -9,8 +9,6 @@ export const removeLineItem: Endpoints['removeLineItem'] = async (
   const id = params.id;
   const line_id = params.line_id;
 
-  console.log(params);
-
   const { data } = await context.client.delete(
     `/store/carts/${id}/line-items/${line_id}`
   );
