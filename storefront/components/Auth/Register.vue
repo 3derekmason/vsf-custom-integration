@@ -1,7 +1,7 @@
 <template>
-  <div class="register">
+  <div class="register w-1/3">
     <form
-      class="flex flex-col items-center gap-4 border-2 rounded border-primary-blue p-4"
+      class="flex flex-col items-center gap-4 border-2 rounded border-primary-blue p-4 w-full"
     >
       <h2>Sign up and earn rewards</h2>
       <div class="flex gap-2 justify-center">
