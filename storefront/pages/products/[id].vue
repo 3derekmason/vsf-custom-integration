@@ -1,5 +1,5 @@
 <template>
-  <div class="product-details w-full p-2 flex gap-2">
+  <div class="product-details w-full p-2 flex gap-2 px-20">
     <div class="image-container flex gap-2">
       <div class="prod-images flex flex-col gap-1">
         <img
@@ -28,7 +28,7 @@
     </div>
 
     <div class="prod-actions flex flex-col gap-1">
-      <h1>
+      <h1 class="text-2xl">
         {{ product?.title }}
       </h1>
       <p v-if="product?.variants">
@@ -40,9 +40,7 @@
       </p>
       <div v-for="option in options" :key="option.id">
         <div>
-          <p>
-            {{ option.title }}
-          </p>
+          <p>{{ option.title }}:</p>
           <div class="option-picker mt-1 flex gap-1">
             <button
               :disabled="selected === value.value"
@@ -57,6 +55,7 @@
         </div>
       </div>
       <div class="cart-actions flex flex-col gap-1">
+        <p>Quantity:</p>
         <span
           class="w-24 p-1 flex gap-1 items-center justify-between rounded text-off-white bg-primary-blue text-xl"
         >
@@ -77,20 +76,22 @@
           </caption>
           <button @click="quantity = quantity + 1">+</button>
         </span>
-        <span class="fulfillment flex flex-col gap-1 w-48 my-2">
+        <span class="fulfillment flex gap-1 my-2">
           <button
-            class="h-10 w-full text-off-white bg-dark-blue border-4 border-transparent disabled:border-vivid-amber disabled:bg-primary-blue"
+            class="h-24 w-32 flex flex-col items-center justify-center text-primary-blue bg-off-white border-4 rounded border-dark-blue disabled:border-vivid-amber"
             :disabled="pickup"
             @click="pickup = true"
           >
-            Pick Up In Store
+            Store Pickup
+            <Icon name="mdi:check-bold" v-if="pickup" />
           </button>
           <button
-            class="h-10 w-full text-off-white bg-dark-blue border-4 border-transparent disabled:border-vivid-amber disabled:bg-primary-blue"
+            class="h-24 w-32 flex flex-col items-center justify-center text-primary-blue bg-off-white border-4 rounded border-dark-blue disabled:border-vivid-amber"
             :disabled="!pickup"
             @click="pickup = false"
           >
-            Ship to Me
+            Ship to Home
+            <Icon name="mdi:check-bold" v-if="!pickup" />
           </button>
         </span>
         <button
@@ -153,7 +154,7 @@ let imageToShow = ref();
 let quantity = ref(1);
 let selected = ref();
 let variantId = ref();
-let pickup = ref(false);
+let pickup = ref(true);
 
 const getProduct = async () => {
   const { data } = await sdk.medusa.getProduct({ id: productId });
@@ -168,7 +169,6 @@ const setVariant = (value: string) => {
     if (variant.title === value) {
       variantId = variant.id;
     }
-    console.log(variantId);
   });
 };
 
