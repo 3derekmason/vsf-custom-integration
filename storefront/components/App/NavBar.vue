@@ -50,7 +50,9 @@
       </div>
       <div class="cart text-lg">
         <NuxtLink href="/cart">
-          <Icon class="w-6 h-6" name="mdi:cart-outline" /> Cart
+          <Icon class="w-6 h-6" name="mdi:cart-outline" /> Cart ({{
+            main.cart.items.length || 0
+          }})
         </NuxtLink>
       </div>
     </div>
@@ -59,4 +61,6 @@
 
 <script setup lang="ts">
 import { SfButton, SfInput } from '@storefront-ui/vue';
+import { useMainStore } from '~/store/main';
+const main = useMainStore();
 </script>

@@ -6,17 +6,23 @@
       <li v-for="item in cartItems">
         <div
           v-if="item.metadata?.pickup === false"
-          class="flex gap-2 items-center"
+          class="flex gap-4 items-center"
         >
-          <img :src="item.thumbnail" :alt="item.title" width="96" />
-          <p>{{ item.title }}</p>
-          <p class="text-vivid-amber text-xl">{{ Number(item.total) / 100 }}</p>
           <button
             class="flex items-center gap-1 p-2 border rounded border-off-white"
             @click="removeItem(item)"
           >
             <Icon name="mdi:delete-outline" /> Remove
           </button>
+          <img :src="item.thumbnail" :alt="item.title" width="96" />
+          <p class="text-2xl">{{ item.title }}</p>
+          <p class="border rounded border-off-white p-2">
+            {{ item.variant.title }}
+          </p>
+          <p>Qty: {{ Number(item.total) / Number(item.unit_price) }}</p>
+          <p class="text-vivid-amber text-xl">
+            ${{ Number(item.total) / 100 }}
+          </p>
         </div>
       </li>
     </ul>
@@ -25,20 +31,40 @@
       <li v-for="item in main.cart.items">
         <div
           v-if="item.metadata?.pickup === true"
-          class="flex gap-2 items-center"
+          class="flex gap-4 items-center"
         >
-          <img :src="item.thumbnail" :alt="item.title" width="96" />
-          <p>{{ item.title }}</p>
-          <p class="text-vivid-amber text-xl">{{ Number(item.total) / 100 }}</p>
           <button
             class="flex items-center gap-1 p-2 border rounded border-off-white"
             @click="removeItem(item)"
           >
             <Icon name="mdi:delete-outline" /> Remove
           </button>
+          <img :src="item.thumbnail" :alt="item.title" width="96" />
+          <p class="text-2xl">{{ item.title }}</p>
+          <p class="border rounded border-off-white p-2">
+            {{ item.variant.title }}
+          </p>
+          <p>Qty: {{ Number(item.total) / Number(item.unit_price) }}</p>
+          <p class="text-vivid-amber text-xl">
+            ${{ Number(item.total) / 100 }}
+          </p>
         </div>
       </li>
     </ul>
+    <div class="flex gap-8 items-center border-t-2 border-light-amber p-8">
+      <h3 class="text-xl">
+        Subtotal:
+        <strong class="text-vivid-amber mx-8"
+          >${{ Number(main.cart.subtotal) / 100 }}</strong
+        >
+      </h3>
+      <NuxtLink
+        to="/"
+        class="p-2 border rounded border-off-white hover:bg-off-white hover:text-primary-blue hover:border-primary-blue"
+        >Proceed to Checkout</NuxtLink
+      >
+    </div>
+
     <!-- <h2>Available Shipping Options:</h2>
     <ul>
       <li v-for="option in shippingOptions" class="flex gap-4">

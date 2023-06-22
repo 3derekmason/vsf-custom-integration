@@ -94,8 +94,14 @@
             <Icon name="mdi:check-bold" v-if="!pickup" />
           </button>
         </span>
+        <div class="my-store flex gap-2">
+          <h4>Pickup at <strong class="underline">Denver</strong></h4>
+          <button class="underline text-primary-blue">
+            Check other stores
+          </button>
+        </div>
         <button
-          class="toCart rounded bg-primary-blue text-off-white h-10 w-24"
+          class="toCart rounded bg-transparent text-dark-blue h-10 w-48 border-2 border-primary-blue hover:bg-primary-blue hover:text-off-white"
           @click="addToCart"
         >
           Add to cart
