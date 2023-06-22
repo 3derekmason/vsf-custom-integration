@@ -6,3 +6,4 @@ export { createCart } from './createCart';
 export { addCartLineItem } from './addCartLineItem';
 export { getProduct } from './getProduct';
 export { removeLineItem } from './removeLineItem';
+export { createCustomer } from './createCustomer';

@@ -24,4 +24,8 @@ export interface Endpoints {
     context: MedusaIntegrationContext,
     params: TODO
   ): Promise<TODO>;
+  createCustomer(
+    context: MedusaIntegrationContext,
+    params: TODO
+  ): Promise<TODO>;
 }
