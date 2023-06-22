@@ -44,14 +44,15 @@
         </button>
       </div>
       <div class="auth text-lg">
-        <NuxtLink href="#">
-          <Icon class="w-6 h-6" name="mdi:account-outline" /> Login/Register
+        <NuxtLink to="/auth">
+          <Icon class="w-6 h-6" name="mdi:account-outline" />
+          {{ main.customer.first_name || 'Login/Register' }}
         </NuxtLink>
       </div>
       <div class="cart text-lg">
         <NuxtLink href="/cart">
           <Icon class="w-6 h-6" name="mdi:cart-outline" /> Cart ({{
-            main.cart.items.length || 0
+            main.cart.items?.length || 0
           }})
         </NuxtLink>
       </div>
