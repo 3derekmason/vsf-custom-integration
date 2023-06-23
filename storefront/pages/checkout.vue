@@ -8,12 +8,6 @@
       <p>${{ Number(option.price_incl_tax) / 100 }}</p>
       <button @click="selectOption(option)">Select this option</button>
     </div>
-    <button
-      v-if="main.customer.shipping_addresses"
-      @click="updateShippingAddress"
-    >
-      Use my shipping address
-    </button>
     <button @click="selectPaymentSession">Select Payment Session</button>
     <div>
       <p>
@@ -140,5 +134,8 @@ const completeCart = async () => {
 onMounted(async () => {
   await createPaymentSessions();
   await listCartShippingOptions();
+  if (main.customer.shipping_addresses) {
+    updateShippingAddress();
+  }
 });
 </script>
