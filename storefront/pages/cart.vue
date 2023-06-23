@@ -118,10 +118,18 @@ const createPaymentSessions = async () => {
   console.log('payment sessions', data);
 };
 
+const listCartShippingOptions = async () => {
+  const { data } = await sdk.medusa.listCartShippingOptions({
+    id: main.cart.id,
+  });
+  console.log('shipping options for cart', data);
+};
+
 onMounted(async () => {
   // fetchShippingOptions();
   await calculateCartTaxes();
   await createPaymentSessions();
+  await listCartShippingOptions();
 });
 
 watchEffect(() => {

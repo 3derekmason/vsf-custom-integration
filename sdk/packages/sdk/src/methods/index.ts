@@ -11,3 +11,4 @@ export { login } from './login';
 export { updateShippingAddress } from './updateShippingAddress';
 export { calculateCartTaxes } from './calculateCartTaxes';
 export { createPaymentSessions } from './createPaymentSessions';
+export { listCartShippingOptions } from './listCartShippingOptions';
