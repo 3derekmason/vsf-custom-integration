@@ -24,6 +24,7 @@ module.exports = {
       'light-orange': '#fff7ed',
       stone: '#d6d3d1',
       'light-stone': '#e7e5e4',
+      warning: '#b91c1c',
     },
   },
 };

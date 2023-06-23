@@ -76,12 +76,12 @@ const main = useMainStore();
 
 const first_name = ref(main.customer.first_name || '');
 const last_name = ref(main.customer.last_name || '');
-const address_1 = ref('');
-const address_2 = ref('');
-const city = ref('');
+const address_1 = ref(main.customer.shipping_addresses[0].address_1 || '');
+const address_2 = ref(main.customer.shipping_addresses[0].address_2 || '');
+const city = ref(main.customer.shipping_addresses[0].city || '');
 const country_code = ref('US');
-const postal_code = ref('');
-const province = ref('');
+const postal_code = ref(main.customer.shipping_addresses[0].postal_code || '');
+const province = ref(main.customer.shipping_addresses[0].provice || '');
 
 const updateShippingAddress = async (e: any) => {
   e.preventDefault();

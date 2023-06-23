@@ -1,51 +1,76 @@
 <template>
-  <div class="cart-page w-full bg-primary-blue text-off-white p-8">
+  <div
+    class="cart-page w-full bg-primary-blue text-off-white p-8 flex flex-col gap-4"
+  >
     <h2 class="text-2xl my-4">My Cart:</h2>
-    <h3 class="text-xl border-b-2 border-vivid-amber">Shipping to Home:</h3>
-    <ul class="p-4">
-      <li v-for="item in deliveryItems">
-        <div class="flex gap-4 items-center">
-          <button
-            class="flex items-center gap-1 p-2 border rounded border-off-white"
-            @click="removeItem(item, false)"
-          >
-            <Icon name="mdi:delete-outline" /> Remove
-          </button>
-          <img :src="item.thumbnail" :alt="item.title" width="96" />
-          <p class="text-2xl">{{ item.title }}</p>
-          <p class="border rounded border-off-white p-2">
-            {{ item.variant.title }}
-          </p>
-          <p>Qty: {{ Number(item.total) / Number(item.unit_price) }}</p>
-          <p class="text-vivid-amber text-xl">
-            ${{ Number(item.total) / 100 }}
-          </p>
-        </div>
-      </li>
-    </ul>
-    <h3 class="text-xl border-b-2 border-vivid-amber">Picking up in store:</h3>
-    <ul class="p-4">
-      <li v-for="item in pickupItems">
-        <div class="flex gap-4 items-center">
-          <button
-            class="flex items-center gap-1 p-2 border rounded border-off-white"
-            @click="removeItem(item, true)"
-          >
-            <Icon name="mdi:delete-outline" /> Remove
-          </button>
-          <img :src="item.thumbnail" :alt="item.title" width="96" />
-          <p class="text-2xl">{{ item.title }}</p>
-          <p class="border rounded border-off-white p-2">
-            {{ item.variant.title }}
-          </p>
-          <p>Qty: {{ Number(item.total) / Number(item.unit_price) }}</p>
-          <p class="text-vivid-amber text-xl">
-            ${{ Number(item.total) / 100 }}
-          </p>
-        </div>
-      </li>
-    </ul>
-    <div class="flex gap-8 items-center border-t-2 border-light-amber p-8">
+    <div class="w-full flex justify-center gap-8">
+      <div class="w-2/5 border rounded border-dull-orange p-2">
+        <h3 class="text-xl border-b-2 border-vivid-amber">Shipping to Home:</h3>
+        <ul class="p-4">
+          <li v-for="item in deliveryItems">
+            <div class="flex gap-4 items-center my-2">
+              <button
+                class="flex items-center gap-1 p-2 border rounded border-off-white hover:border-warning hover:bg-warning"
+                @click="removeItem(item, false)"
+              >
+                <Icon name="mdi:delete-outline" />
+              </button>
+              <img :src="item.thumbnail" :alt="item.title" width="96" />
+              <div class="flex flex-col gap-2">
+                <span class="flex gap-4 items-center">
+                  <p class="border rounded border-off-white p-2 text-center">
+                    {{ item.variant.title }}
+                  </p>
+                  <p class="text-2xl">{{ item.title }}</p>
+                </span>
+                <span class="flex gap-4 items-center ml-4">
+                  <p>Qty: {{ Number(item.total) / Number(item.unit_price) }}</p>
+                  <p class="text-vivid-amber text-xl">
+                    ${{ Number(item.total) / 100 }}
+                  </p>
+                </span>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="w-2/5 border rounded border-dull-orange p-2">
+        <h3 class="text-xl border-b-2 border-vivid-amber">
+          Picking up in store:
+        </h3>
+        <ul class="p-4">
+          <li v-for="item in pickupItems">
+            <div class="flex gap-4 items-center my-2">
+              <button
+                class="flex items-center gap-1 p-2 border rounded border-off-white hover:border-warning hover:bg-warning"
+                @click="removeItem(item, false)"
+              >
+                <Icon name="mdi:delete-outline" />
+              </button>
+              <img :src="item.thumbnail" :alt="item.title" width="96" />
+              <div class="flex flex-col gap-2">
+                <span class="flex gap-4 items-center">
+                  <p class="border rounded border-off-white p-2 text-center">
+                    {{ item.variant.title }}
+                  </p>
+                  <p class="text-2xl">{{ item.title }}</p>
+                </span>
+                <span class="flex gap-4 items-center ml-4">
+                  <p>Qty: {{ Number(item.total) / Number(item.unit_price) }}</p>
+                  <p class="text-vivid-amber text-xl">
+                    ${{ Number(item.total) / 100 }}
+                  </p>
+                </span>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div
+      class="flex items-center justify-end gap-8 border-t-2 border-b-2 border-light-amber p-8 mx-12"
+    >
       <h3 class="text-xl">
         Subtotal:
         <strong class="text-vivid-amber mx-8"
@@ -59,8 +84,8 @@
       <NuxtLink
         to="/checkout"
         class="p-2 border rounded border-off-white hover:bg-off-white hover:text-primary-blue hover:border-primary-blue"
-        >Proceed to Checkout</NuxtLink
-      >
+        >Proceed to Checkout <Icon name="mdi:chevron-right"
+      /></NuxtLink>
     </div>
   </div>
 </template>
