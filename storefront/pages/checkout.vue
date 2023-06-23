@@ -101,6 +101,22 @@ const main = useMainStore();
 const availableShippingOptions = ref([]);
 const selectedShippingOption = ref('');
 
+const addShippingMethod = async () => {
+  const delivery = await sdk.medusa.addShippingMethod({
+    id: main.cart_delivery.id,
+    option_id: selectedShippingOption.value.id,
+  });
+
+  main.setDeliveryCart(delivery.data.cart);
+};
+
+const completeCart = async () => {
+  const pickup = await sdk.medusa.completeCart({ id: main.cart_pickup.id });
+  const delivery = await sdk.medusa.completeCart({ id: main.cart_delivery.id });
+  console.log('pickup', pickup);
+  console.log('delivery', delivery);
+};
+
 const createPaymentSessions = async () => {
   const pickup = await sdk.medusa.createPaymentSessions({
     id: main.cart_pickup.id,
@@ -113,11 +129,6 @@ const createPaymentSessions = async () => {
   main.setDeliveryCart(delivery.data.cart);
 
   selectPaymentSession();
-};
-
-const selectOption = async (option: any) => {
-  selectedShippingOption.value = option;
-  await addShippingMethod();
 };
 
 const listCartShippingOptions = async () => {
@@ -140,28 +151,9 @@ const listCartShippingOptions = async () => {
   main.setPickupCart(pickup.data.cart);
 };
 
-const addShippingMethod = async () => {
-  const delivery = await sdk.medusa.addShippingMethod({
-    id: main.cart_delivery.id,
-    option_id: selectedShippingOption.value.id,
-  });
-
-  main.setDeliveryCart(delivery.data.cart);
-};
-
-const updateShippingAddress = async () => {
-  const body = {
-    shipping_address: main.customer.shipping_addresses[0].id,
-    billing_address: main.customer.shipping_addresses[0].id,
-  };
-  const pickup = await sdk.medusa.updateCart({ id: main.cart_pickup.id, body });
-  const delivery = await sdk.medusa.updateCart({
-    id: main.cart_delivery.id,
-    body,
-  });
-
-  main.setPickupCart(pickup.data.cart);
-  main.setDeliveryCart(delivery.data.cart);
+const selectOption = async (option: any) => {
+  selectedShippingOption.value = option;
+  await addShippingMethod();
 };
 
 const selectPaymentSession = async () => {
@@ -181,11 +173,19 @@ const selectPaymentSession = async () => {
   main.setDeliveryCart(delivery.data.cart);
 };
 
-const completeCart = async () => {
-  const pickup = await sdk.medusa.completeCart({ id: main.cart_pickup.id });
-  const delivery = await sdk.medusa.completeCart({ id: main.cart_delivery.id });
-  console.log('pickup', pickup);
-  console.log('delivery', delivery);
+const updateShippingAddress = async () => {
+  const body = {
+    shipping_address: main.customer.shipping_addresses[0].id,
+    billing_address: main.customer.shipping_addresses[0].id,
+  };
+  const pickup = await sdk.medusa.updateCart({ id: main.cart_pickup.id, body });
+  const delivery = await sdk.medusa.updateCart({
+    id: main.cart_delivery.id,
+    body,
+  });
+
+  main.setPickupCart(pickup.data.cart);
+  main.setDeliveryCart(delivery.data.cart);
 };
 
 onMounted(async () => {

@@ -95,20 +95,8 @@ import { sdk } from '../../sdk/packages/sdk.config';
 import { useMainStore } from '~/store/main';
 const main = useMainStore();
 
-const pickupItems = ref([]);
 const deliveryItems = ref([]);
-
-const removeItem = async (item: any, pickup: boolean) => {
-  const id = pickup ? main.cart_pickup.id : main.cart_delivery.id;
-  const line_id = item.id;
-  const { data } = await sdk.medusa.removeLineItem({ id, line_id });
-
-  if (pickup) {
-    main.setPickupCart(data.cart);
-  } else {
-    main.setDeliveryCart(data.cart);
-  }
-};
+const pickupItems = ref([]);
 
 const calculateCartTaxes = async () => {
   const pickupTax = await sdk.medusa.calculateCartTaxes({
@@ -122,12 +110,24 @@ const calculateCartTaxes = async () => {
   main.setDeliveryCart(deliveryTax.data.cart);
 };
 
+const removeItem = async (item: any, pickup: boolean) => {
+  const id = pickup ? main.cart_pickup.id : main.cart_delivery.id;
+  const line_id = item.id;
+  const { data } = await sdk.medusa.removeLineItem({ id, line_id });
+
+  if (pickup) {
+    main.setPickupCart(data.cart);
+  } else {
+    main.setDeliveryCart(data.cart);
+  }
+};
+
 onMounted(async () => {
   await calculateCartTaxes();
 });
 
 watchEffect(() => {
-  pickupItems.value = main.cart_pickup.items;
   deliveryItems.value = main.cart_delivery.items;
+  pickupItems.value = main.cart_pickup.items;
 });
 </script>

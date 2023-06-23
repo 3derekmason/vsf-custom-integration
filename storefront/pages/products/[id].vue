@@ -150,34 +150,18 @@ import { sdk } from '../../../sdk/packages/sdk.config';
 import { useMainStore } from '~/store/main';
 const main = useMainStore();
 const route = useRoute();
+
 const productId = route.params.id.toString();
 
-const product = ref();
 const options = ref();
+const product = ref();
 
-let showDetails = ref(false);
 let imageToShow = ref();
+let pickup = ref(true);
 let quantity = ref(1);
 let selected = ref();
+let showDetails = ref(false);
 let variantId = ref('');
-
-let pickup = ref(true);
-
-const getProduct = async () => {
-  const { data } = await sdk.medusa.getProduct({ id: productId });
-  product.value = data.product;
-  imageToShow.value = data.product.images[0].id;
-  options.value = data.product.options;
-};
-
-const setVariant = (value: string) => {
-  selected.value = value;
-  product.value.variants.forEach((variant: any) => {
-    if (variant.title === value) {
-      variantId = variant.id;
-    }
-  });
-};
 
 const addToCart = async () => {
   if (variantId.value === '') {
@@ -203,6 +187,22 @@ const addToCart = async () => {
   }
   selected.value = false;
   quantity.value = 1;
+};
+
+const getProduct = async () => {
+  const { data } = await sdk.medusa.getProduct({ id: productId });
+  product.value = data.product;
+  imageToShow.value = data.product.images[0].id;
+  options.value = data.product.options;
+};
+
+const setVariant = (value: string) => {
+  selected.value = value;
+  product.value.variants.forEach((variant: any) => {
+    if (variant.title === value) {
+      variantId = variant.id;
+    }
+  });
 };
 
 onMounted(() => {

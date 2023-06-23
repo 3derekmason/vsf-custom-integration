@@ -22,8 +22,8 @@
 import { useMainStore } from '~/store/main';
 const main = useMainStore();
 
-const isProfile = ref(false);
 const isLogin = ref(true);
+const isProfile = ref(false);
 
 watchEffect(() => {
   if (main.customer.email) {
