@@ -110,12 +110,18 @@ const removeItem = async (item: any) => {
 
 const calculateCartTaxes = async () => {
   const { data } = await sdk.medusa.calculateCartTaxes({ id: main.cart.id });
-  console.log('returned', data);
+  console.log('taxes', data);
 };
 
-onMounted(() => {
+const createPaymentSessions = async () => {
+  const { data } = await sdk.medusa.createPaymentSessions({ id: main.cart.id });
+  console.log('payment sessions', data);
+};
+
+onMounted(async () => {
   // fetchShippingOptions();
-  calculateCartTaxes();
+  await calculateCartTaxes();
+  await createPaymentSessions();
 });
 
 watchEffect(() => {

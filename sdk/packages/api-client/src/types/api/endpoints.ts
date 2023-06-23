@@ -38,4 +38,8 @@ export interface Endpoints {
     context: MedusaIntegrationContext,
     params: TODO
   ): Promise<TODO>;
+  createPaymentSessions(
+    context: MedusaIntegrationContext,
+    params: TODO
+  ): Promise<TODO>;
 }
