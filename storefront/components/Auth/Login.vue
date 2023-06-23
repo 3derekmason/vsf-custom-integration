@@ -38,11 +38,16 @@ const addCustomerToCart = async (customer_id: string) => {
   const body = {
     customer_id: customer_id,
   };
-  const { data } = await sdk.medusa.updateCart({
-    id: main.cart.id,
+  const pickup = await sdk.medusa.updateCart({
+    id: main.cart_pickup.id,
     body,
   });
-  main.setCart(data.cart);
+  const delivery = await sdk.medusa.updateCart({
+    id: main.cart_delivery.id,
+    body,
+  });
+  main.setPickupCart(pickup.data.cart);
+  main.setDeliveryCart(delivery.data.cart);
 };
 
 const login = async (e: any) => {
