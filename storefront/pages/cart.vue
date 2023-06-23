@@ -64,19 +64,6 @@
         >Proceed to Checkout</NuxtLink
       >
     </div>
-
-    <!-- <h2>Available Shipping Options:</h2>
-    <ul>
-      <li v-for="option in shippingOptions" class="flex gap-4">
-        <caption>
-          {{
-            option.is_return ? 'Shipping' : 'Return'
-          }}
-        </caption>
-        <p>{{ option.name }}</p>
-        <p>{{ Number(option.amount) / 100 }}</p>
-      </li>
-    </ul> -->
   </div>
 </template>
 
@@ -85,21 +72,7 @@ import { sdk } from '../../sdk/packages/sdk.config';
 import { useMainStore } from '~/store/main';
 const main = useMainStore();
 
-interface ShippingOption {
-  id: string;
-  amount: number;
-  name: string;
-  is_return: boolean;
-}
-
 const cartItems = ref([]);
-const shippingOptions: Ref<ShippingOption[] | undefined> = ref([]);
-
-const fetchShippingOptions = async () => {
-  const { data } = await sdk.medusa.getShippingMethods('');
-
-  shippingOptions.value = data.shipping_options;
-};
 
 const removeItem = async (item: any) => {
   const id = main.cart.id;
@@ -110,11 +83,10 @@ const removeItem = async (item: any) => {
 
 const calculateCartTaxes = async () => {
   const { data } = await sdk.medusa.calculateCartTaxes({ id: main.cart.id });
-  console.log('taxes', data);
+  main.setCart(data.cart);
 };
 
 onMounted(async () => {
-  // fetchShippingOptions();
   await calculateCartTaxes();
 });
 

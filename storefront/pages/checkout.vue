@@ -37,7 +37,6 @@ const createPaymentSessions = async () => {
 const selectOption = async (option: any) => {
   selectedShippingOption.value = option;
   await addShippingMethod();
-  console.log(main.cart);
 };
 
 const listCartShippingOptions = async () => {
@@ -79,7 +78,6 @@ const completeCart = async () => {
 };
 
 onMounted(async () => {
-  // fetchShippingOptions();
   await createPaymentSessions();
   await listCartShippingOptions();
 });

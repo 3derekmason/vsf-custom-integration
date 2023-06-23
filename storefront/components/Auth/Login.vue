@@ -43,7 +43,6 @@ const addCustomerToCart = async (customer_id: string) => {
     body,
   });
   main.setCart(data.cart);
-  console.log(main.cart);
 };
 
 const login = async (e: any) => {
@@ -54,7 +53,6 @@ const login = async (e: any) => {
   };
   try {
     const { data } = await sdk.medusa.login(body);
-    console.log(data);
     main.setCustomer(data.customer);
     addCustomerToCart(data.customer.id);
   } catch (e) {
