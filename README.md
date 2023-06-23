@@ -56,46 +56,83 @@ Now that we have the entire system running, let's look at how to use everything 
 
 ## Using Middleware
 
-Let's look at how we can get the "products" from our Medusa store and use them from the Storefront.
+#### Creating an endpoint
 
-Inside `/sdk/packages/api-client` there is an endpoint we named **getProducts**:
+This is the process for creating a new method/endpoint. We will be creating `doSomething` as an example.
+
+Beginning in `~/sdk`:
+
+1. First we will create the API endpoint with our method and logic.
+
+`/skd/packages/api-client/src/api`
+
+Create a new folder `doSomething` and inside make an `index.ts` file:
 
 ```ts
-export const getProducts: Endpoints['getProducts'] = async (
+import { Endpoints } from '../../types';
+
+export const doSomething: Endpoints['doSomething'] = async (
   context,
   params
 ) => {
-  console.log('getProducts has been called');
-  const { data } = await context.client.get('/store/products');
-  return { data: data };
+  console.log('doSomething has been called');
+
+  return { data: 'Hello from doSomething endpoint' };
 };
 ```
 
-In this case the `client` is configured as our Medusa backend, so we are simply calling the Medusa API endpoint at "/store/products".
+and export this endpoint:
 
-If we look at this method in `/skd/packages/sdk/src/methods` we can see that the middleware is configured to call this endpoint via a 'POST' request:
+`/sdk/packages/api-client/src/api/index.ts`
 
 ```ts
-export async function getProducts(props: TODO) {
-  const { data } = await client.post<TODO>('getProducts', props);
+export { doSomething } from './doSomething';
+```
+
+2. Now we need to add this endpoint where it's being imported from `/types`...
+
+`/sdk/packages/api-client/src/types/api/endpoints.ts`
+
+```ts
+export interface Endpoints {
+  // ...
+
+  doSomething(context: MedusaIntegrationContext, params: TODO): Promise<TODO>;
+}
+```
+
+3. Now add the method to the sdk:
+
+`/sdk/packages/sdk/src/methods`
+
+Create a new folder `doSomething`
+
+`/sdk/packages/sdk/src/methods/doSomething/index.ts`
+
+```ts
+import { client } from '../../client';
+import { TODO } from '../../types';
+
+export async function doSomething(props: TODO) {
+  const { data } = await client.post<TODO>('doSomething', props);
   return data;
 }
 ```
 
-Without changing this setup, we will simply have to send a 'POST' request to this endpoint from our storefront.
+And export the method:
 
-The middleware server is set up on port `:8181`, so from our storfront this is the enpoint we will send our requests to. The default name for our middleware integration is 'boilerplate', so right now our storefront will actually make requests to `http://localhost:8181/boilerplate/<endpoint>`.
-
-So in order to call this enpoint and fetch the products from the Storefront, we will use the 'getProducts' endpoint that we set up in the middleware.
+`/sdk/packages/sdk/src/methods/index.ts`
 
 ```ts
-const endpoint = 'http://localhost:8181/boilerplate/getProducts';
+// ...
+export { doSomething } from './doSomething';
+// ...
+```
 
-const fetchProducts = async () => {
-  await fetch(endpoint, { method: 'post' })
-    .then((res) => res.json())
-    .then((data) => {
-      console.log(data);
-    });
-};
+4. Build the sdk, from `~/sdk` run `npm run build` and restart the middleware server `npm run dev`
+
+5. Now we should be able to use this method in the storefront
+
+```ts
+const { data } = await sdk.medusa.doSomething();
 ```
