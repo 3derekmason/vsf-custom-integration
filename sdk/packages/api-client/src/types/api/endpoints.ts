@@ -1,5 +1,15 @@
 import { MedusaIntegrationContext, TODO } from '..';
 export interface Endpoints {
+  addCartLineItem(
+    context: MedusaIntegrationContext,
+    params: TODO
+  ): Promise<TODO>;
+
+  addShippingMethod(
+    context: MedusaIntegrationContext,
+    params: TODO
+  ): Promise<TODO>;
+
   calculateCartTaxes(
     context: MedusaIntegrationContext,
     params: TODO
@@ -41,11 +51,6 @@ export interface Endpoints {
   ): Promise<TODO>;
 
   updateShippingAddress(
-    context: MedusaIntegrationContext,
-    params: TODO
-  ): Promise<TODO>;
-
-  addCartLineItem(
     context: MedusaIntegrationContext,
     params: TODO
   ): Promise<TODO>;
