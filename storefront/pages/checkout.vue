@@ -1,14 +1,10 @@
 <template>
   <div class="checkout-page w-full p-8 flex flex-col gap-4">
-    <div v-for="option in availableShippingOptions">
+    <div v-for="option in availableShippingOptions" class="flex gap-4">
       <p>{{ option.name }}</p>
       <p>${{ Number(option.price_incl_tax) / 100 }}</p>
       <button @click="selectOption(option)">Select this option</button>
     </div>
-    <p>Selected: {{ selectedShippingOption.id || '' }}</p>
-    <button @click="addShippingMethod" v-if="selectedShippingOption.id">
-      Confirm
-    </button>
     <button
       v-if="main.customer.shipping_addresses"
       @click="updateShippingAddress"
@@ -16,6 +12,11 @@
       Use my shipping address
     </button>
     <button @click="selectPaymentSession">Select Payment Session</button>
+    <div>
+      <p>Subtotal: {{ Number(main.cart.subtotal) / 100 }}</p>
+      <p>Shipping: {{ Number(main.cart.shipping_total) / 100 }}</p>
+      <p>Total: {{ Number(main.cart.total) / 100 }}</p>
+    </div>
   </div>
 </template>
 
@@ -32,8 +33,10 @@ const createPaymentSessions = async () => {
   main.setCart(data.cart);
 };
 
-const selectOption = (option: any) => {
+const selectOption = async (option: any) => {
   selectedShippingOption.value = option;
+  await addShippingMethod();
+  console.log(main.cart);
 };
 
 const listCartShippingOptions = async () => {
