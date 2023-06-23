@@ -10,13 +10,15 @@ import { useMainStore } from './store/main';
 
 const main = useMainStore();
 
-const createCart = async () => {
-  const { data } = await sdk.medusa.createCart('');
-  main.setCart(data.cart);
+const createCarts = async () => {
+  const cart1 = await sdk.medusa.createCart('');
+  const cart2 = await sdk.medusa.createCart('');
+  main.setDeliveryCart(cart1.data.cart);
+  main.setPickupCart(cart2.data.cart);
 };
 
 onMounted(() => {
-  createCart();
+  createCarts();
 });
 </script>
 

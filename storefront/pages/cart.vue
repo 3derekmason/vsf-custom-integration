@@ -3,14 +3,11 @@
     <h2 class="text-2xl my-4">My Cart:</h2>
     <h3 class="text-xl border-b-2 border-vivid-amber">Shipping to Home:</h3>
     <ul class="p-4">
-      <li v-for="item in cartItems">
-        <div
-          v-if="item.metadata?.pickup === false"
-          class="flex gap-4 items-center"
-        >
+      <li v-for="item in deliveryItems">
+        <div class="flex gap-4 items-center">
           <button
             class="flex items-center gap-1 p-2 border rounded border-off-white"
-            @click="removeItem(item)"
+            @click="removeItem(item, false)"
           >
             <Icon name="mdi:delete-outline" /> Remove
           </button>
@@ -28,14 +25,11 @@
     </ul>
     <h3 class="text-xl border-b-2 border-vivid-amber">Picking up in store:</h3>
     <ul class="p-4">
-      <li v-for="item in main.cart.items">
-        <div
-          v-if="item.metadata?.pickup === true"
-          class="flex gap-4 items-center"
-        >
+      <li v-for="item in pickupItems">
+        <div class="flex gap-4 items-center">
           <button
             class="flex items-center gap-1 p-2 border rounded border-off-white"
-            @click="removeItem(item)"
+            @click="removeItem(item, true)"
           >
             <Icon name="mdi:delete-outline" /> Remove
           </button>
@@ -55,7 +49,11 @@
       <h3 class="text-xl">
         Subtotal:
         <strong class="text-vivid-amber mx-8"
-          >${{ Number(main.cart.subtotal) / 100 }}</strong
+          >${{
+            (Number(main.cart_pickup.subtotal) +
+              Number(main.cart_delivery.subtotal)) /
+            100
+          }}</strong
         >
       </h3>
       <NuxtLink
@@ -72,18 +70,31 @@ import { sdk } from '../../sdk/packages/sdk.config';
 import { useMainStore } from '~/store/main';
 const main = useMainStore();
 
-const cartItems = ref([]);
+const pickupItems = ref([]);
+const deliveryItems = ref([]);
 
-const removeItem = async (item: any) => {
-  const id = main.cart.id;
+const removeItem = async (item: any, pickup: boolean) => {
+  const id = pickup ? main.cart_pickup.id : main.cart_delivery.id;
   const line_id = item.id;
   const { data } = await sdk.medusa.removeLineItem({ id, line_id });
-  main.setCart(data.cart);
+
+  if (pickup) {
+    main.setPickupCart(data.cart);
+  } else {
+    main.setDeliveryCart(data.cart);
+  }
 };
 
 const calculateCartTaxes = async () => {
-  const { data } = await sdk.medusa.calculateCartTaxes({ id: main.cart.id });
-  main.setCart(data.cart);
+  const pickupTax = await sdk.medusa.calculateCartTaxes({
+    id: main.cart_pickup.id,
+  });
+  const deliveryTax = await sdk.medusa.calculateCartTaxes({
+    id: main.cart_delivery.id,
+  });
+
+  main.setPickupCart(pickupTax.data.cart);
+  main.setDeliveryCart(deliveryTax.data.cart);
 };
 
 onMounted(async () => {
@@ -91,6 +102,7 @@ onMounted(async () => {
 });
 
 watchEffect(() => {
-  cartItems.value = main.cart.items;
+  pickupItems.value = main.cart_pickup.items;
+  deliveryItems.value = main.cart_delivery.items;
 });
 </script>
