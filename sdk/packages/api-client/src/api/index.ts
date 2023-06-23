@@ -11,5 +11,6 @@ export { hello } from './hello';
 export { listCartShippingOptions } from './listCartShippingOptions';
 export { login } from './login';
 export { removeLineItem } from './removeLineItem';
+export { selectPaymentSession } from './selectPaymentSession';
 export { updateCart } from './updateCart';
 export { updateShippingAddress } from './updateShippingAddress';

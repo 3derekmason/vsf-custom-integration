@@ -1,5 +1,5 @@
 <template>
-  <div class="checkout-page w-full p-8">
+  <div class="checkout-page w-full p-8 flex flex-col gap-4">
     <div v-for="option in availableShippingOptions">
       <p>{{ option.name }}</p>
       <p>${{ Number(option.price_incl_tax) / 100 }}</p>
@@ -15,6 +15,7 @@
     >
       Use my shipping address
     </button>
+    <button @click="selectPaymentSession">Select Payment Session</button>
   </div>
 </template>
 
@@ -28,12 +29,11 @@ const selectedShippingOption = ref('');
 
 const createPaymentSessions = async () => {
   const { data } = await sdk.medusa.createPaymentSessions({ id: main.cart.id });
-  console.log('payment sessions', data);
+  main.setCart(data.cart);
 };
 
 const selectOption = (option: any) => {
   selectedShippingOption.value = option;
-  console.log(selectedShippingOption.value);
 };
 
 const listCartShippingOptions = async () => {
@@ -48,7 +48,7 @@ const addShippingMethod = async () => {
     id: main.cart.id,
     option_id: selectedShippingOption.value.id,
   });
-  console.log(data);
+  main.setCart(data.cart);
 };
 
 const updateShippingAddress = async () => {
@@ -57,13 +57,21 @@ const updateShippingAddress = async () => {
     billing_address: main.customer.shipping_addresses[0].id,
   };
   const { data } = await sdk.medusa.updateCart({ id: main.cart.id, body });
-  console.log(data);
+  main.setCart(data.cart);
+};
+
+const selectPaymentSession = async () => {
+  const provider_id = main.cart.payment_session.provider_id;
+  const { data } = await sdk.medusa.selectPaymentSession({
+    id: main.cart.id,
+    provider_id: provider_id,
+  });
+  main.setCart(data.cart);
 };
 
 onMounted(async () => {
   // fetchShippingOptions();
   await createPaymentSessions();
   await listCartShippingOptions();
-  console.log(main.customer);
 });
 </script>
