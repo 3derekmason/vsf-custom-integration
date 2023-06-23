@@ -1,15 +1,62 @@
 <template>
   <div class="checkout-page w-full p-8 flex flex-col gap-4">
-    <div
-      v-for="option in availableShippingOptions.slice(0, 2)"
-      class="flex gap-4"
-    >
-      <p>{{ option.name }}</p>
-      <p>${{ Number(option.price_incl_tax) / 100 }}</p>
-      <button @click="selectOption(option)">Select this option</button>
+    <h1 class="text-2xl">Review Order:</h1>
+    <div class="flex w-full gap-8 justify-center">
+      <div
+        class="flex flex-col p-4 g-4 border rounded border-vivid-amber w-2/5"
+      >
+        <h2>Shipping to <strong>Home</strong>:</h2>
+        <ul>
+          <li v-for="item in main.cart_delivery.items" class="flex gap-4">
+            <p>{{ Number(item.total) / Number(item.unit_price) }}x</p>
+            <p>{{ item.title }}</p>
+            <p>${{ Number(item.total) / 100 }}</p>
+          </li>
+        </ul>
+        <div
+          class="border-t-2 border-dull-orange w-full p-4 flex flex-col gap-2"
+        >
+          <p><em>Choose a shipping option:</em></p>
+          <div
+            v-for="option in availableShippingOptions.slice(0, 2)"
+            class="flex gap-4 w-full justify-between items-center"
+          >
+            <p>{{ option.name }}</p>
+            <p>${{ Number(option.price_incl_tax) / 100 }}</p>
+            <button
+              @click="selectOption(option)"
+              class="p-2 border rounded border-primary-blue bg-primary-blue text-off-white w-40"
+              v-if="selectedShippingOption.id === option.id"
+            >
+              <Icon name="mdi:check-bold" />
+            </button>
+            <button
+              @click="selectOption(option)"
+              class="p-2 border rounded border-primary-blue w-40"
+              v-else
+            >
+              <p>Select this Option</p>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div
+        class="flex flex-col p-4 g-4 border rounded border-vivid-amber w-2/5"
+      >
+        <h2>Pickup in <strong>Denver</strong>:</h2>
+        <ul>
+          <li v-for="item in main.cart_pickup.items" class="flex gap-4">
+            <p>{{ Number(item.total) / Number(item.unit_price) }}x</p>
+            <p>{{ item.title }}</p>
+            <p>${{ Number(item.total) / 100 }}</p>
+          </li>
+        </ul>
+        <div class="border-t-2 border-dull-orange w-full p-8">
+          <p><em>No shipping for in-store pickup.</em></p>
+        </div>
+      </div>
     </div>
-    <button @click="selectPaymentSession">Select Payment Session</button>
-    <div>
+    <div class="p-4 border-t-2 border-b-2 border-vivid-amber w-full">
       <p>
         Subtotal:
         {{
@@ -26,15 +73,23 @@
           100
         }}
       </p>
-      <p>
-        Total:
-        {{
-          (Number(main.cart_pickup.total) + Number(main.cart_delivery.total)) /
-          100
-        }}
-      </p>
+      <div class="w-full flex justify-between items-center pr-12 mt-2">
+        <p class="p-2 border-t-2 border-primary-blue text-xl">
+          Total:
+          {{
+            (Number(main.cart_pickup.total) +
+              Number(main.cart_delivery.total)) /
+            100
+          }}
+        </p>
+        <button
+          @click="completeCart"
+          class="p-2 border border-primary-blue bg-primary-blue text-off-white hover:text-vivid-amber"
+        >
+          COMPLETE ORDER
+        </button>
+      </div>
     </div>
-    <button @click="completeCart">COMPLETE ORDER</button>
   </div>
 </template>
 
@@ -56,6 +111,8 @@ const createPaymentSessions = async () => {
 
   main.setPickupCart(pickup.data.cart);
   main.setDeliveryCart(delivery.data.cart);
+
+  selectPaymentSession();
 };
 
 const selectOption = async (option: any) => {
