@@ -52,9 +52,7 @@
       <div class="cart text-lg">
         <NuxtLink href="/cart">
           <Icon class="w-6 h-6" name="mdi:cart-outline" /> Cart ({{
-            main.cart_delivery.items?.length ||
-            0 + main.cart_pickup.items?.length ||
-            0
+            totalItems
           }})
         </NuxtLink>
       </div>
@@ -66,4 +64,11 @@
 import { SfButton, SfInput } from '@storefront-ui/vue';
 import { useMainStore } from '~/store/main';
 const main = useMainStore();
+const totalItems = ref(0);
+
+watchEffect(() => {
+  totalItems.value =
+    (main.cart_pickup.items?.length || 0) +
+    (main.cart_delivery.items?.length || 0);
+});
 </script>
