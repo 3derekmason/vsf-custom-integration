@@ -59,7 +59,7 @@
         >
       </h3>
       <NuxtLink
-        to="/"
+        to="/checkout"
         class="p-2 border rounded border-off-white hover:bg-off-white hover:text-primary-blue hover:border-primary-blue"
         >Proceed to Checkout</NuxtLink
       >
@@ -113,23 +113,9 @@ const calculateCartTaxes = async () => {
   console.log('taxes', data);
 };
 
-const createPaymentSessions = async () => {
-  const { data } = await sdk.medusa.createPaymentSessions({ id: main.cart.id });
-  console.log('payment sessions', data);
-};
-
-const listCartShippingOptions = async () => {
-  const { data } = await sdk.medusa.listCartShippingOptions({
-    id: main.cart.id,
-  });
-  console.log('shipping options for cart', data);
-};
-
 onMounted(async () => {
   // fetchShippingOptions();
   await calculateCartTaxes();
-  await createPaymentSessions();
-  await listCartShippingOptions();
 });
 
 watchEffect(() => {

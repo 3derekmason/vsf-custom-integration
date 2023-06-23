@@ -6,8 +6,7 @@ export const addShippingMethod: Endpoints['addShippingMethod'] = async (
 ) => {
   console.log('addShippingMethod has been called');
 
-  const endpoint = `/store/carts/${params.id}/shipping-method`;
-
+  const endpoint = `/store/carts/${params.id}/shipping-methods`;
   const { data } = await context.client.post(endpoint, {
     option_id: params.option_id,
   });
