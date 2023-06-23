@@ -1,15 +1,13 @@
-export { getProducts } from './getProducts';
-export { hello } from './hello';
-export { getShippingMethods } from './getShippingMethods';
-
-export { createCart } from './createCart';
 export { addCartLineItem } from './addCartLineItem';
-export { getProduct } from './getProduct';
-export { removeLineItem } from './removeLineItem';
-export { createCustomer } from './createCustomer';
-export { login } from './login';
-export { updateShippingAddress } from './updateShippingAddress';
 export { calculateCartTaxes } from './calculateCartTaxes';
-
+export { createCart } from './createCart';
+export { createCustomer } from './createCustomer';
 export { createPaymentSessions } from './createPaymentSessions';
+export { getProducts } from './getProducts';
+export { getProduct } from './getProduct';
+export { getShippingMethods } from './getShippingMethods';
+export { hello } from './hello';
 export { listCartShippingOptions } from './listCartShippingOptions';
+export { login } from './login';
+export { removeLineItem } from './removeLineItem';
+export { updateShippingAddress } from './updateShippingAddress';
