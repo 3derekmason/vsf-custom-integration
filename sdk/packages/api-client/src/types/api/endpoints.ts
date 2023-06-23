@@ -33,4 +33,9 @@ export interface Endpoints {
     context: MedusaIntegrationContext,
     params: TODO
   ): Promise<TODO>;
+
+  calculateCartTaxes(
+    context: MedusaIntegrationContext,
+    params: TODO
+  ): Promise<TODO>;
 }

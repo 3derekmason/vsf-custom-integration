@@ -9,3 +9,4 @@ export { removeLineItem } from './removeLineItem';
 export { createCustomer } from './createCustomer';
 export { login } from './login';
 export { updateShippingAddress } from './updateShippingAddress';
+export { calculateCartTaxes } from './calculateCartTaxes';
