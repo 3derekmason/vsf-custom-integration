@@ -9,6 +9,12 @@
     <button @click="addShippingMethod" v-if="selectedShippingOption.id">
       Confirm
     </button>
+    <button
+      v-if="main.customer.shipping_addresses"
+      @click="updateShippingAddress"
+    >
+      Use my shipping address
+    </button>
   </div>
 </template>
 
@@ -45,9 +51,19 @@ const addShippingMethod = async () => {
   console.log(data);
 };
 
+const updateShippingAddress = async () => {
+  const body = {
+    shipping_address: main.customer.shipping_addresses[0].id,
+    billing_address: main.customer.shipping_addresses[0].id,
+  };
+  const { data } = await sdk.medusa.updateCart({ id: main.cart.id, body });
+  console.log(data);
+};
+
 onMounted(async () => {
   // fetchShippingOptions();
   await createPaymentSessions();
   await listCartShippingOptions();
+  console.log(main.customer);
 });
 </script>
