@@ -15,6 +15,8 @@ export interface Endpoints {
     params: TODO
   ): Promise<TODO>;
 
+  completeCart(context: MedusaIntegrationContext, params: TODO): Promise<TODO>;
+
   createCart(context: MedusaIntegrationContext, params: TODO): Promise<TODO>;
 
   createCustomer(

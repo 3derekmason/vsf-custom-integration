@@ -1,6 +1,7 @@
 export { addCartLineItem } from './addCartLineItem';
 export { addShippingMethod } from './addShippingMethod';
 export { calculateCartTaxes } from './calculateCartTaxes';
+export { completeCart } from './completeCart';
 export { createCart } from './createCart';
 export { createCustomer } from './createCustomer';
 export { createPaymentSessions } from './createPaymentSessions';
