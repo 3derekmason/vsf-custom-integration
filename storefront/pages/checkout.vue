@@ -17,6 +17,7 @@
       <p>Shipping: {{ Number(main.cart.shipping_total) / 100 }}</p>
       <p>Total: {{ Number(main.cart.total) / 100 }}</p>
     </div>
+    <button @click="completeCart">COMPLETE ORDER</button>
   </div>
 </template>
 
@@ -70,6 +71,11 @@ const selectPaymentSession = async () => {
     provider_id: provider_id,
   });
   main.setCart(data.cart);
+};
+
+const completeCart = async () => {
+  const { data } = await sdk.medusa.completeCart({ id: main.cart.id });
+  console.log(data);
 };
 
 onMounted(async () => {

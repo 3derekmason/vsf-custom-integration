@@ -7,6 +7,10 @@ export const completeCart: Endpoints['completeCart'] = async (
   console.log('completeCart has been called');
 
   const endpoint = `/store/carts/${params.id}/complete`;
-  const { data } = await context.client.post(endpoint);
-  return { data: data };
+  try {
+    const { data } = await context.client.post(endpoint);
+    return { data: data };
+  } catch (e) {
+    console.log(e);
+  }
 };
