@@ -11,7 +11,7 @@
             <div class="flex gap-4 items-center my-2">
               <button
                 class="flex items-center gap-1 p-2 border rounded border-off-white hover:border-warning hover:bg-warning"
-                @click="removeItem(item, false)"
+                @click="removeItem(item, 'delivery')"
               >
                 <Icon name="mdi:delete-outline" />
               </button>
@@ -48,7 +48,7 @@
             <div class="flex gap-4 items-center my-2">
               <button
                 class="flex items-center gap-1 p-2 border rounded border-off-white hover:border-warning hover:bg-warning"
-                @click="removeItem(item, false)"
+                @click="removeItem(item, 'pickup')"
               >
                 <Icon name="mdi:delete-outline" />
               </button>
@@ -120,12 +120,13 @@ const calculateCartTaxes = async () => {
   main.setDeliveryCart(deliveryTax.data.cart);
 };
 
-const removeItem = async (item: any, pickup: boolean) => {
-  const id = pickup ? main.cart_pickup.id : main.cart_delivery.id;
+const removeItem = async (item: any, type: string) => {
+  const id = type === 'pickup' ? main.cart_pickup.id : main.cart_delivery.id;
   const line_id = item.id;
+  console.log(id);
   const { data } = await sdk.medusa.removeLineItem({ id, line_id });
 
-  if (pickup) {
+  if (type === 'pickup') {
     main.setPickupCart(data.cart);
   } else {
     main.setDeliveryCart(data.cart);
