@@ -132,9 +132,8 @@ const removeItem = async (item: any, pickup: boolean) => {
   }
 };
 
-onMounted(async () => {
-  await calculateCartTaxes();
-  console.log(main.cart_delivery);
+onMounted(() => {
+  calculateCartTaxes();
 });
 
 watchEffect(() => {

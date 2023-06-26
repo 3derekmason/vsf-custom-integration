@@ -30,7 +30,7 @@
 import { sdk } from '../../../sdk/packages/sdk.config';
 import { useMainStore } from '~/store/main';
 const main = useMainStore();
-
+const config = useRuntimeConfig();
 const email = ref('');
 const password = ref('');
 
@@ -48,8 +48,7 @@ const addCustomerToCart = async (customer_id: string) => {
   });
 
   // add family rewards discount
-
-  main.setDiscounts([{ code: 'WFR23' }]);
+  main.setDiscounts([{ code: config.public.WILCO_FAMILY_REWARDS }]);
 
   main.setPickupCart(pickup.data.cart);
   main.setDeliveryCart(delivery.data.cart);

@@ -201,10 +201,10 @@ const updateShippingAddress = async () => {
 };
 
 const addDiscounts = async () => {
-  console.log(main.discounts);
   const body = {
     discounts: main.discounts,
   };
+  console.log(body);
   const pickup = await sdk.medusa.updateCart({ id: main.cart_pickup.id, body });
   const delivery = await sdk.medusa.updateCart({
     id: main.cart_pickup.id,
@@ -216,11 +216,11 @@ const addDiscounts = async () => {
 };
 
 onMounted(async () => {
+  addDiscounts();
   await createPaymentSessions();
   await listCartShippingOptions();
   if (main.customer.shipping_addresses) {
     updateShippingAddress();
   }
-  addDiscounts();
 });
 </script>
