@@ -34,9 +34,12 @@ const main = useMainStore();
 const email = ref('');
 const password = ref('');
 
+const family_rewards_code = 'WFR23';
+
 const addCustomerToCart = async (customer_id: string) => {
   const body = {
     customer_id: customer_id,
+    discounts: [{ code: family_rewards_code }],
   };
   const pickup = await sdk.medusa.updateCart({
     id: main.cart_pickup.id,
@@ -46,6 +49,7 @@ const addCustomerToCart = async (customer_id: string) => {
     id: main.cart_delivery.id,
     body,
   });
+
   main.setPickupCart(pickup.data.cart);
   main.setDeliveryCart(delivery.data.cart);
 };
