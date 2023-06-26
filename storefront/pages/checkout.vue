@@ -124,7 +124,6 @@ const addDiscounts = async () => {
   const body = {
     discounts: main.discounts,
   };
-  console.log(body);
   const pickup = await sdk.medusa.updateCart({ id: main.cart_pickup.id, body });
   const delivery = await sdk.medusa.updateCart({
     id: main.cart_pickup.id,
