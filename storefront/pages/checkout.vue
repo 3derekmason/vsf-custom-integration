@@ -60,6 +60,11 @@
         </div>
       </div>
     </div>
+    <div class="p-4 flex items-center gap-4">
+      <p>Have a discount code:</p>
+      <input type="text" placeholder="Ex. SUMMER23" v-model="code" />
+      <button class="p-2 border rounded" @click="addDiscountCode">Add</button>
+    </div>
     <div class="p-4 border-t-2 border-b-2 border-vivid-amber w-full">
       <p>
         Subtotal:
@@ -112,6 +117,30 @@ const main = useMainStore();
 
 const availableShippingOptions = ref([]);
 const selectedShippingOption = ref('');
+
+const code = ref('');
+
+const addDiscounts = async () => {
+  const body = {
+    discounts: main.discounts,
+  };
+  console.log(body);
+  const pickup = await sdk.medusa.updateCart({ id: main.cart_pickup.id, body });
+  const delivery = await sdk.medusa.updateCart({
+    id: main.cart_pickup.id,
+    body,
+  });
+
+  main.setPickupCart(pickup.data.cart);
+  main.setDeliveryCart(delivery.data.cart);
+};
+
+const addDiscountCode = () => {
+  const codes: { code: string }[] = main.discounts;
+  codes.push({ code: code.value });
+  main.setDiscounts(codes);
+  addDiscounts();
+};
 
 const addShippingMethod = async () => {
   const delivery = await sdk.medusa.addShippingMethod({
@@ -193,20 +222,6 @@ const updateShippingAddress = async () => {
   const pickup = await sdk.medusa.updateCart({ id: main.cart_pickup.id, body });
   const delivery = await sdk.medusa.updateCart({
     id: main.cart_delivery.id,
-    body,
-  });
-
-  main.setPickupCart(pickup.data.cart);
-  main.setDeliveryCart(delivery.data.cart);
-};
-
-const addDiscounts = async () => {
-  const body = {
-    discounts: main.discounts,
-  };
-  const pickup = await sdk.medusa.updateCart({ id: main.cart_pickup.id, body });
-  const delivery = await sdk.medusa.updateCart({
-    id: main.cart_pickup.id,
     body,
   });
 
