@@ -123,7 +123,7 @@ const calculateCartTaxes = async () => {
 const removeItem = async (item: any, type: string) => {
   const id = type === 'pickup' ? main.cart_pickup.id : main.cart_delivery.id;
   const line_id = item.id;
-  console.log(id);
+
   const { data } = await sdk.medusa.removeLineItem({ id, line_id });
 
   if (type === 'pickup') {
