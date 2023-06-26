@@ -24,7 +24,12 @@
                   <p class="text-2xl">{{ item.title }}</p>
                 </span>
                 <span class="flex gap-4 items-center ml-4">
-                  <p>Qty: {{ Number(item.total) / Number(item.unit_price) }}</p>
+                  <p>
+                    Qty:
+                    {{
+                      Math.ceil(Number(item.total) / Number(item.unit_price))
+                    }}
+                  </p>
                   <p class="text-vivid-amber text-xl">
                     ${{ Number(item.total) / 100 }}
                   </p>
@@ -56,7 +61,12 @@
                   <p class="text-2xl">{{ item.title }}</p>
                 </span>
                 <span class="flex gap-4 items-center ml-4">
-                  <p>Qty: {{ Number(item.total) / Number(item.unit_price) }}</p>
+                  <p>
+                    Qty:
+                    {{
+                      Math.ceil(Number(item.total) / Number(item.unit_price))
+                    }}
+                  </p>
                   <p class="text-vivid-amber text-xl">
                     ${{ Number(item.total) / 100 }}
                   </p>
@@ -124,6 +134,7 @@ const removeItem = async (item: any, pickup: boolean) => {
 
 onMounted(async () => {
   await calculateCartTaxes();
+  console.log(main.cart_delivery);
 });
 
 watchEffect(() => {

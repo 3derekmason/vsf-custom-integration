@@ -8,7 +8,9 @@
         <h2>Shipping to <strong>Home</strong>:</h2>
         <ul>
           <li v-for="item in main.cart_delivery.items" class="flex gap-4">
-            <p>{{ Number(item.total) / Number(item.unit_price) }}x</p>
+            <p>
+              {{ Math.ceil(Number(item.total) / Number(item.unit_price)) }}x
+            </p>
             <p>{{ item.title }}</p>
             <p>${{ Number(item.total) / 100 }}</p>
           </li>
@@ -46,7 +48,9 @@
         <h2>Pickup in <strong>Denver</strong>:</h2>
         <ul>
           <li v-for="item in main.cart_pickup.items" class="flex gap-4">
-            <p>{{ Number(item.total) / Number(item.unit_price) }}x</p>
+            <p>
+              {{ Math.ceil(Number(item.total) / Number(item.unit_price)) }}x
+            </p>
             <p>{{ item.title }}</p>
             <p>${{ Number(item.total) / 100 }}</p>
           </li>
@@ -62,6 +66,14 @@
         {{
           (Number(main.cart_pickup.subtotal) +
             Number(main.cart_delivery.subtotal)) /
+          100
+        }}
+      </p>
+      <p>
+        Discounts:
+        {{
+          (Number(main.cart_pickup.discount_total) +
+            Number(main.cart_delivery.discount_total)) /
           100
         }}
       </p>
@@ -100,6 +112,8 @@ const main = useMainStore();
 
 const availableShippingOptions = ref([]);
 const selectedShippingOption = ref('');
+
+const family_rewards_code = 'WFR23';
 
 const addShippingMethod = async () => {
   const delivery = await sdk.medusa.addShippingMethod({
@@ -188,11 +202,28 @@ const updateShippingAddress = async () => {
   main.setDeliveryCart(delivery.data.cart);
 };
 
+const addDiscounts = async () => {
+  const body = {
+    discounts: [{ code: family_rewards_code }],
+  };
+  const pickup = await sdk.medusa.updateCart({ id: main.cart_pickup.id, body });
+  const delivery = await sdk.medusa.updateCart({
+    id: main.cart_pickup.id,
+    body,
+  });
+
+  main.setPickupCart(pickup.data.cart);
+  main.setDeliveryCart(delivery.data.cart);
+};
+
 onMounted(async () => {
   await createPaymentSessions();
   await listCartShippingOptions();
   if (main.customer.shipping_addresses) {
     updateShippingAddress();
+  }
+  if (main.customer.email) {
+    addDiscounts();
   }
 });
 </script>
