@@ -148,6 +148,11 @@
 <script setup lang="ts">
 import { sdk } from '../../../sdk/packages/sdk.config';
 import { useMainStore } from '~/store/main';
+
+definePageMeta({
+  layout: 'product',
+});
+
 const main = useMainStore();
 const route = useRoute();
 
