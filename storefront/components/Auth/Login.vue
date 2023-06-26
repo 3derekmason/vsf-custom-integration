@@ -47,6 +47,10 @@ const addCustomerToCart = async (customer_id: string) => {
     body,
   });
 
+  // add family rewards discount
+
+  main.setDiscounts([{ code: 'WFR23' }]);
+
   main.setPickupCart(pickup.data.cart);
   main.setDeliveryCart(delivery.data.cart);
 };

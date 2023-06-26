@@ -6,6 +6,7 @@ export const useMainStore = defineStore('main', {
     cart_pickup: {},
 
     customer: {},
+    discounts: [],
   }),
   actions: {
     setCustomer(customer) {
@@ -16,6 +17,9 @@ export const useMainStore = defineStore('main', {
     },
     setPickupCart(newCart) {
       this.cart_pickup = newCart;
+    },
+    setDiscounts(discountArray) {
+      this.discounts = discountArray;
     },
   },
 });

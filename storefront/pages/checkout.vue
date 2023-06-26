@@ -113,8 +113,6 @@ const main = useMainStore();
 const availableShippingOptions = ref([]);
 const selectedShippingOption = ref('');
 
-const family_rewards_code = 'WFR23';
-
 const addShippingMethod = async () => {
   const delivery = await sdk.medusa.addShippingMethod({
     id: main.cart_delivery.id,
@@ -203,8 +201,9 @@ const updateShippingAddress = async () => {
 };
 
 const addDiscounts = async () => {
+  console.log(main.discounts);
   const body = {
-    discounts: [{ code: family_rewards_code }],
+    discounts: main.discounts,
   };
   const pickup = await sdk.medusa.updateCart({ id: main.cart_pickup.id, body });
   const delivery = await sdk.medusa.updateCart({
@@ -222,8 +221,6 @@ onMounted(async () => {
   if (main.customer.shipping_addresses) {
     updateShippingAddress();
   }
-  if (main.customer.email) {
-    addDiscounts();
-  }
+  addDiscounts();
 });
 </script>
