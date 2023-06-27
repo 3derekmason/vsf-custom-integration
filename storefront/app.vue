@@ -10,6 +10,8 @@ import { useMainStore } from './store/main';
 
 const main = useMainStore();
 
+// When the app loads we create two carts, one for items that will be picked up in store, and one for items to be shipped
+
 const createCarts = async () => {
   const cart1 = await sdk.medusa.createCart('');
   const cart2 = await sdk.medusa.createCart('');

@@ -150,6 +150,7 @@ const addShippingMethod = async () => {
   main.setDeliveryCart(delivery.data.cart);
 };
 
+// complete both carts, returns each order, each cart will have it's own order (one for pickup fulfillment, one to be shipped)
 const completeCart = async () => {
   const pickup = await sdk.medusa.completeCart({ id: main.cart_pickup.id });
   const delivery = await sdk.medusa.completeCart({ id: main.cart_delivery.id });
@@ -228,6 +229,11 @@ const updateShippingAddress = async () => {
   main.setDeliveryCart(delivery.data.cart);
 };
 
+//When the checkout page is loaded, we:
+// 1. apply available discounts to cart(s)
+// 2. create payment sessions for cart(s)
+// 3. list available shipping options for delivery cart
+// 4. add the customer's shipping address to cart(s)
 onMounted(async () => {
   addDiscounts();
   await createPaymentSessions();

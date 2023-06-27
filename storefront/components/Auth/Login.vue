@@ -34,6 +34,7 @@ const config = useRuntimeConfig();
 const email = ref('');
 const password = ref('');
 
+// Associate the customer with the order(s)
 const addCustomerToCart = async (customer_id: string) => {
   const body = {
     customer_id: customer_id,
@@ -54,6 +55,7 @@ const addCustomerToCart = async (customer_id: string) => {
   main.setDeliveryCart(delivery.data.cart);
 };
 
+// On login the customer is added to each cart, and the rewards discount is applied
 const login = async (e: any) => {
   e.preventDefault();
   const body = {

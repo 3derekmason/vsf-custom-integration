@@ -61,12 +61,13 @@
 </template>
 
 <script setup lang="ts">
-import { SfButton, SfInput } from '@storefront-ui/vue';
+import { SfButton } from '@storefront-ui/vue';
 import { useMainStore } from '~/store/main';
 const main = useMainStore();
 const totalItems = ref(0);
 
 watchEffect(() => {
+  // Add the total items from both cart and display as `totalItems`
   totalItems.value =
     (main.cart_pickup.items?.length || 0) +
     (main.cart_delivery.items?.length || 0);

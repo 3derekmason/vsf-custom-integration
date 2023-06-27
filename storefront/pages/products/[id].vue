@@ -168,6 +168,9 @@ let selected = ref();
 let showDetails = ref(false);
 let variantId = ref('');
 
+// When an item is added to cart, we check for a variant_id of the product,
+// depending on the fulfillment option selected we associate the corresponding cartId
+// a line item is then added to cart with { pickup: boolean, quantity: number, id: string, variant_id: string}
 const addToCart = async () => {
   if (variantId.value === '') {
     alert('Please choose a size/variant');

@@ -200,6 +200,10 @@ const removeItem = async (item: any, type: string) => {
   }
 };
 
+// Move Pickup to Shipping (or vice versa...)
+// Takes in the item we want to move, and the id of the cart it is currently in
+// We then call `removeItem` to remove the line from cart A
+// and then `addCartLineItem` to cart B
 const movePtoS = async (item: any, cartId: string) => {
   if (cartId === main.cart_pickup.id) {
     await removeItem(item, 'pickup');
@@ -231,6 +235,7 @@ onMounted(() => {
 });
 
 watchEffect(() => {
+  // we want to display all items from both carts
   cartItems.value = main.cart_delivery.items.concat(main.cart_pickup.items);
 });
 </script>
