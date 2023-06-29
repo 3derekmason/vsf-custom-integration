@@ -1,113 +1,134 @@
 <template>
-  <div class="product-details w-full p-2 flex gap-2 px-20">
-    <div class="image-container flex gap-2">
-      <div class="prod-images flex flex-col gap-1">
-        <img
-          v-for="image in product?.images"
-          :key="image.id"
-          width="150"
-          height="150"
-          :alt="product.title"
-          :src="image.url"
-          @click="imageToShow = image.id"
-          :class="
-            imageToShow === image.id
-              ? 'shown border-1 border-primary-blue'
-              : 'border-1 border-primary-blue'
-          "
-        />
+  <div class="flex flex-col gap-4 w-full">
+    <div class="product-details w-full p-2 flex justify-center gap-2 px-20">
+      <div class="flex flex-col gap-4 w-2/5">
+        <h1 class="text-6xl">
+          {{ product?.title }}
+        </h1>
+        <h3 class="text-xl">By <strong class="underline">Medusa</strong></h3>
+        <div class="image-container w-full flex gap-2">
+          <div class="prod-images flex flex-col gap-1">
+            <img
+              v-for="image in product?.images"
+              :key="image.id"
+              width="150"
+              height="80"
+              :alt="product.title"
+              :src="image.url"
+              @click="imageToShow = image.id"
+              :class="
+                imageToShow === image.id
+                  ? 'shown border-2 border-primary-blue'
+                  : 'border-2 border-dull-orange'
+              "
+            />
+          </div>
+
+          <div
+            class="shown-image max-w-md overflow-hidden border-2 border-dull-orange p-2"
+          >
+            <div v-for="image in product?.images" :key="image.id">
+              <div v-if="image.id === imageToShow">
+                <img :alt="product.title" :src="image.url" width="400" />
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div class="shown-image max-w-md overflow-hidden">
-        <div v-for="image in product?.images" :key="image.id">
-          <div v-if="image.id === imageToShow">
-            <img :alt="product.title" :src="image.url" width="400" />
+      <div
+        class="prod-actions flex flex-col gap-4 w-2/5 rounded border border-dull-orange p-8"
+      >
+        <p
+          v-if="product?.variants"
+          class="text-4xl border-b border-dull-orange p-2"
+        >
+          ${{ (product.variants[0].prices[0].amount / 100).toFixed(2) }}
+        </p>
+
+        <div v-for="option in options" :key="option.id">
+          <div>
+            <p>{{ option.title }}:</p>
+            <div class="option-picker mt-1 flex gap-1 w-full">
+              <button
+                :disabled="selected === value.value"
+                v-for="value in option.values"
+                :key="value.id"
+                @click="setVariant(value.value)"
+                class="w-24 h-10 rounded-full text-gray bg-off-white border-2 border-dull-orange"
+              >
+                {{ value.value }}
+              </button>
+            </div>
           </div>
+        </div>
+        <div class="cart-actions flex flex-col gap-4">
+          <span class="fulfillment flex gap-4 my-2">
+            <button
+              class="h-36 w-48 flex flex-col items-center justify-center text-primary-blue text-2xl bg-transparent border-4 rounded border-dull-orange disabled:border-primary-blue disabled:bg-off-white"
+              :disabled="pickup"
+              @click="pickup = true"
+            >
+              Store Pickup
+              <Icon name="mdi:check-bold" v-if="pickup" />
+            </button>
+            <button
+              class="h-36 w-48 flex flex-col items-center justify-center text-primary-blue text-2xl bg-transparent border-4 rounded border-dull-orange disabled:border-primary-blue disabled:bg-off-white"
+              :disabled="!pickup"
+              @click="pickup = false"
+            >
+              Ship to Home
+              <Icon name="mdi:check-bold" v-if="!pickup" />
+            </button>
+          </span>
+          <div class="my-store flex gap-2">
+            <h4>Pickup at <strong class="underline">Denver</strong></h4>
+            <button class="underline text-primary-blue">
+              Check other stores
+            </button>
+          </div>
+          <span
+            class="w-full h-12 p-4 flex gap-1 items-center justify-between text-gray bg-off-white text-2xl border rounded border-dull-orange"
+          >
+            <button
+              class="h-full flex items-center bg-transparent text-lg"
+              @click="
+                if (quantity > 0) {
+                  quantity = quantity - 1;
+                }
+              "
+            >
+              –
+            </button>
+            <caption>
+              {{
+                JSON.stringify(quantity)
+              }}
+            </caption>
+            <button @click="quantity = quantity + 1">+</button>
+          </span>
+          <span class="w-full flex justify-center gap-4">
+            <button
+              class="toCart rounded-full bg-primary-blue text-off-white h-14 w-1/2 border-2 border-primary-blue"
+              @click="addToCart"
+            >
+              + Add to cart
+            </button>
+            <button
+              class="toCart rounded-full bg-off-white text-dark-blue h-14 w-1/2 border-2 border-primary-blue"
+              @click="addToCart"
+            >
+              Buy now & checkout
+            </button>
+          </span>
         </div>
       </div>
     </div>
-
-    <div class="prod-actions flex flex-col gap-1">
-      <h1 class="text-2xl">
-        {{ product?.title }}
-      </h1>
-      <p v-if="product?.variants">
-        {{ product.variants[0].prices[0].amount / 100 }}
-        {{ product.variants[0].prices[0].currency_code.toUpperCase() }}
-      </p>
-      <p>
-        {{ product?.description }}
-      </p>
-      <div v-for="option in options" :key="option.id">
-        <div>
-          <p>{{ option.title }}:</p>
-          <div class="option-picker mt-1 flex gap-1">
-            <button
-              :disabled="selected === value.value"
-              v-for="value in option.values"
-              :key="value.id"
-              @click="setVariant(value.value)"
-              class="w-10 h-10 rounded text-off-white bg-primary-blue"
-            >
-              {{ value.value }}
-            </button>
-          </div>
-        </div>
-      </div>
-      <div class="cart-actions flex flex-col gap-1">
-        <p>Quantity:</p>
-        <span
-          class="w-24 p-1 flex gap-1 items-center justify-between rounded text-off-white bg-primary-blue text-xl"
-        >
-          <button
-            class="h-full flex items-center bg-transparent text-off-white text-lg"
-            @click="
-              if (quantity > 0) {
-                quantity = quantity - 1;
-              }
-            "
-          >
-            –
-          </button>
-          <caption>
-            {{
-              JSON.stringify(quantity)
-            }}
-          </caption>
-          <button @click="quantity = quantity + 1">+</button>
-        </span>
-        <span class="fulfillment flex gap-1 my-2">
-          <button
-            class="h-24 w-32 flex flex-col items-center justify-center text-primary-blue bg-off-white border-4 rounded border-dark-blue disabled:border-vivid-amber"
-            :disabled="pickup"
-            @click="pickup = true"
-          >
-            Store Pickup
-            <Icon name="mdi:check-bold" v-if="pickup" />
-          </button>
-          <button
-            class="h-24 w-32 flex flex-col items-center justify-center text-primary-blue bg-off-white border-4 rounded border-dark-blue disabled:border-vivid-amber"
-            :disabled="!pickup"
-            @click="pickup = false"
-          >
-            Ship to Home
-            <Icon name="mdi:check-bold" v-if="!pickup" />
-          </button>
-        </span>
-        <div class="my-store flex gap-2">
-          <h4>Pickup at <strong class="underline">Denver</strong></h4>
-          <button class="underline text-primary-blue">
-            Check other stores
-          </button>
-        </div>
-        <button
-          class="toCart rounded bg-transparent text-dark-blue h-10 w-48 border-2 border-primary-blue hover:bg-primary-blue hover:text-off-white"
-          @click="addToCart"
-        >
-          Add to cart
-        </button>
-      </div>
+    <div>
       <div class="details mt-1 p-1 border-y border-primary-blue">
+        <p>
+          {{ product?.description }}
+        </p>
         <div>
           <h3>
             <button
@@ -221,7 +242,6 @@ onMounted(() => {
 <style>
 .prod-images img.shown {
   opacity: 0.6;
-  border: 1px solid var(--secondary-main);
 }
 
 .shown-image img {
@@ -235,5 +255,6 @@ onMounted(() => {
 
 .option-picker button:disabled {
   opacity: 0.8;
+  border: 2px solid #003b5c;
 }
 </style>
