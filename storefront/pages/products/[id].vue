@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col gap-4 w-full">
-    <div class="product-details w-full p-2 flex justify-center gap-2 px-20">
+    <div class="product-details w-full p-2 flex justify-center gap-2 px-10">
       <div class="flex flex-col gap-4 w-2/5">
         <h1 class="text-6xl">
           {{ product?.title }}
@@ -125,24 +125,32 @@
       </div>
     </div>
     <div>
-      <div class="details mt-1 p-1 border-y border-primary-blue">
-        <p>
+      <div
+        class="details mt-1 p-10 border-y border-dull-orange flex flex-col gap-2"
+      >
+        <h1 class="text-4xl">About This Item</h1>
+        <p class="p-4">
           {{ product?.description }}
         </p>
         <div>
-          <h3>
-            <button
-              class="w-full flex justify-between bg-transparent"
-              type="button"
-              @click="showDetails = !showDetails"
-            >
-              <span>Details</span>
-              <span>
-                <span>—</span>
-              </span>
-            </button>
-          </h3>
-          <div v-if="showDetails">
+          <button
+            :class="
+              showDetails
+                ? 'w-full flex justify-between bg-primary-blue text-off-white h-16 p-4 text-2xl'
+                : 'w-full flex justify-between bg-dull-orange h-16 p-4 text-2xl'
+            "
+            type="button"
+            @click="showDetails = !showDetails"
+          >
+            <span>Details</span>
+            <span>
+              <span
+                ><Icon
+                  :name="showDetails ? 'mdi:chevron-up' : 'mdi:chevron-down'"
+              /></span>
+            </span>
+          </button>
+          <div v-if="showDetails" class="bg-off-white h-32 p-4">
             <div>
               <ul class="m-2 list-none">
                 <li>
@@ -160,6 +168,17 @@
               </ul>
             </div>
           </div>
+        </div>
+        <div>
+          <button
+            class="w-full flex justify-between bg-dull-orange h-16 p-4 text-2xl"
+            type="button"
+          >
+            <span>Reviews</span>
+            <span>
+              <span><Icon name="mdi:chevron-down" /></span>
+            </span>
+          </button>
         </div>
       </div>
     </div>
