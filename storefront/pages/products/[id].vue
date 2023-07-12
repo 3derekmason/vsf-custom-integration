@@ -209,7 +209,7 @@ let showDetails = ref(false);
 let variantId = ref('');
 
 // When an item is added to cart, we check for a variant_id of the product,
-// depending on the fulfillment option selected we associate the corresponding cartId
+// depending on the fulfillment option selected we add metadata to the cart line item
 // a line item is then added to cart with { pickup: boolean, quantity: number, id: string, variant_id: string}
 const addToCart = async () => {
   if (variantId.value === '') {
@@ -217,7 +217,7 @@ const addToCart = async () => {
     return new Error('No Variant Id');
   }
 
-  const cartId = pickup.value ? main.cart_pickup.id : main.cart_delivery.id;
+  const cartId = main.cart.id;
 
   const body = {
     pickup: pickup.value,
@@ -228,11 +228,7 @@ const addToCart = async () => {
 
   const { data } = await sdk.medusa.addCartLineItem(body);
 
-  if (pickup.value) {
-    main.setPickupCart(data.cart);
-  } else {
-    main.setDeliveryCart(data.cart);
-  }
+  main.setCart(data.cart);
   selected.value = false;
   quantity.value = 1;
 };

@@ -68,8 +68,6 @@ const totalItems = ref(0);
 
 watchEffect(() => {
   // Add the total items from both cart and display as `totalItems`
-  totalItems.value =
-    (main.cart_pickup.items?.length || 0) +
-    (main.cart_delivery.items?.length || 0);
+  totalItems.value = main.cart.items?.length || 0;
 });
 </script>

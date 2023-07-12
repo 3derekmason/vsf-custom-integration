@@ -39,20 +39,15 @@ const addCustomerToCart = async (customer_id: string) => {
   const body = {
     customer_id: customer_id,
   };
-  const pickup = await sdk.medusa.updateCart({
-    id: main.cart_pickup.id,
-    body,
-  });
-  const delivery = await sdk.medusa.updateCart({
-    id: main.cart_delivery.id,
+  const { data } = await sdk.medusa.updateCart({
+    id: main.cart.id,
     body,
   });
 
   // add family rewards discount
   main.setDiscounts([{ code: config.public.WILCO_FAMILY_REWARDS }]);
 
-  main.setPickupCart(pickup.data.cart);
-  main.setDeliveryCart(delivery.data.cart);
+  main.setCart(data.cart);
 };
 
 // On login the customer is added to each cart, and the rewards discount is applied

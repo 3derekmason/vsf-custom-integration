@@ -12,15 +12,13 @@ const main = useMainStore();
 
 // When the app loads we create two carts, one for items that will be picked up in store, and one for items to be shipped
 
-const createCarts = async () => {
-  const cart1 = await sdk.medusa.createCart('');
-  const cart2 = await sdk.medusa.createCart('');
-  main.setDeliveryCart(cart1.data.cart);
-  main.setPickupCart(cart2.data.cart);
+const createCart = async () => {
+  const { data } = await sdk.medusa.createCart('');
+  main.setCart(data.cart);
 };
 
 onMounted(() => {
-  createCarts();
+  createCart();
 });
 </script>
 

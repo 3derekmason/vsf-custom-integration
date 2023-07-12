@@ -1,6 +1,6 @@
 <template>
   <div class="checkout-page w-full p-8 flex flex-col gap-4">
-    <div v-if="!main.cart_delivery.email">
+    <div v-if="!main.cart.email">
       <CheckoutGuestForm />
     </div>
     <div v-else>
@@ -11,12 +11,14 @@
         >
           <h2>Shipping to <strong>Home</strong>:</h2>
           <ul>
-            <li v-for="item in main.cart_delivery.items" class="flex gap-4">
-              <p>
-                {{ Math.ceil(Number(item.total) / Number(item.unit_price)) }}x
-              </p>
-              <p>{{ item.title }}</p>
-              <p>${{ Number(item.total) / 100 }}</p>
+            <li v-for="item in main.cart.items">
+              <div class="flex gap-4" v-if="item.metadata.pickup === false">
+                <p>
+                  {{ Math.ceil(Number(item.total) / Number(item.unit_price)) }}x
+                </p>
+                <p>{{ item.title }}</p>
+                <p>${{ Number(item.total) / 100 }}</p>
+              </div>
             </li>
           </ul>
           <div
@@ -51,14 +53,17 @@
         >
           <h2>Pickup in <strong>Denver</strong>:</h2>
           <ul>
-            <li v-for="item in main.cart_pickup.items" class="flex gap-4">
-              <p>
-                {{ Math.ceil(Number(item.total) / Number(item.unit_price)) }}x
-              </p>
-              <p>{{ item.title }}</p>
-              <p>${{ Number(item.total) / 100 }}</p>
+            <li v-for="item in main.cart.items">
+              <div class="flex gap-4" v-if="item.metadata.pickup">
+                <p>
+                  {{ Math.ceil(Number(item.total) / Number(item.unit_price)) }}x
+                </p>
+                <p>{{ item.title }}</p>
+                <p>${{ Number(item.total) / 100 }}</p>
+              </div>
             </li>
           </ul>
+
           <div class="border-t-2 border-dull-orange w-full p-8">
             <p><em>No shipping for in-store pickup.</em></p>
           </div>
@@ -72,36 +77,20 @@
       <div class="p-4 border-t-2 border-b-2 border-vivid-amber w-full">
         <p>
           Subtotal:
-          {{
-            (Number(main.cart_pickup.subtotal) +
-              Number(main.cart_delivery.subtotal)) /
-            100
-          }}
+          {{ Number(main.cart.subtotal) / 100 }}
         </p>
         <p>
           Discounts:
-          {{
-            (Number(main.cart_pickup.discount_total) +
-              Number(main.cart_delivery.discount_total)) /
-            100
-          }}
+          {{ Number(main.cart.discount_total) / 100 }}
         </p>
         <p>
           Shipping:
-          {{
-            (Number(main.cart_pickup.shipping_total) +
-              Number(main.cart_delivery.shipping_total)) /
-            100
-          }}
+          {{ Number(main.cart.shipping_total) / 100 }}
         </p>
         <div class="w-full flex justify-between items-center pr-12 mt-2">
           <p class="p-2 border-t-2 border-primary-blue text-xl">
             Total:
-            {{
-              (Number(main.cart_pickup.total) +
-                Number(main.cart_delivery.total)) /
-              100
-            }}
+            {{ Number(main.cart.total) / 100 }}
           </p>
           <button
             @click="completeCart"
@@ -129,14 +118,12 @@ const addDiscounts = async () => {
   const body = {
     discounts: main.discounts,
   };
-  const pickup = await sdk.medusa.updateCart({ id: main.cart_pickup.id, body });
-  const delivery = await sdk.medusa.updateCart({
-    id: main.cart_pickup.id,
+  const { data } = await sdk.medusa.updateCart({
+    id: main.cart.id,
     body,
   });
 
-  main.setPickupCart(pickup.data.cart);
-  main.setDeliveryCart(delivery.data.cart);
+  main.setCart(data.cart);
 };
 
 const addDiscountCode = () => {
@@ -147,33 +134,26 @@ const addDiscountCode = () => {
 };
 
 const addShippingMethod = async () => {
-  const delivery = await sdk.medusa.addShippingMethod({
-    id: main.cart_delivery.id,
+  const { data } = await sdk.medusa.addShippingMethod({
+    id: main.cart.id,
     option_id: selectedShippingOption.value.id,
   });
 
-  main.setDeliveryCart(delivery.data.cart);
+  main.setCart(data.cart);
 };
 
 // complete both carts, returns each order, each cart will have it's own order (one for pickup fulfillment, one to be shipped)
 const completeCart = async () => {
-  const pickup = await sdk.medusa.completeCart({ id: main.cart_pickup.id });
-  const delivery = await sdk.medusa.completeCart({ id: main.cart_delivery.id });
-  console.log('pickup', pickup);
-  console.log('delivery', delivery);
+  const { data } = await sdk.medusa.completeCart({ id: main.cart.id });
+  console.log('order placed', data);
 };
 
 const createPaymentSessions = async () => {
   try {
-    const pickup = await sdk.medusa.createPaymentSessions({
-      id: main.cart_pickup.id,
+    const { data } = await sdk.medusa.createPaymentSessions({
+      id: main.cart.id,
     });
-    const delivery = await sdk.medusa.createPaymentSessions({
-      id: main.cart_delivery.id,
-    });
-
-    main.setPickupCart(pickup.data.cart);
-    main.setDeliveryCart(delivery.data.cart);
+    main.setCart(data.cart);
   } catch (err) {
     console.error(err);
   }
@@ -183,7 +163,7 @@ const createPaymentSessions = async () => {
 
 const listCartShippingOptions = async () => {
   const { data } = await sdk.medusa.listCartShippingOptions({
-    id: main.cart_delivery.id,
+    id: main.cart.id,
   });
   availableShippingOptions.value = data.shipping_options;
 
@@ -195,10 +175,10 @@ const listCartShippingOptions = async () => {
     }
   });
   const pickup = await sdk.medusa.addShippingMethod({
-    id: main.cart_pickup.id,
+    id: main.cart.id,
     option_id: pickup_option_id,
   });
-  main.setPickupCart(pickup.data.cart);
+  main.setCart(pickup.data.cart);
 };
 
 const selectOption = async (option: any) => {
@@ -207,20 +187,14 @@ const selectOption = async (option: any) => {
 };
 
 const selectPaymentSession = async () => {
-  const pickup_provider_id = main.cart_pickup.payment_session.provider_id;
-  const delivery_provider_id = main.cart_delivery.payment_session.provider_id;
+  const provider_id = main.cart.payment_session.provider_id;
 
-  const pickup = await sdk.medusa.selectPaymentSession({
-    id: main.cart_pickup.id,
-    provider_id: pickup_provider_id,
-  });
-  const delivery = await sdk.medusa.selectPaymentSession({
-    id: main.cart_delivery.id,
-    provider_id: delivery_provider_id,
+  const { data } = await sdk.medusa.selectPaymentSession({
+    id: main.cart.id,
+    provider_id: provider_id,
   });
 
-  main.setPickupCart(pickup.data.cart);
-  main.setDeliveryCart(delivery.data.cart);
+  main.setCart(data.cart);
 };
 
 const updateShippingAddress = async () => {
@@ -228,14 +202,9 @@ const updateShippingAddress = async () => {
     shipping_address: main.customer.shipping_addresses[0].id,
     billing_address: main.customer.shipping_addresses[0].id,
   };
-  const pickup = await sdk.medusa.updateCart({ id: main.cart_pickup.id, body });
-  const delivery = await sdk.medusa.updateCart({
-    id: main.cart_delivery.id,
-    body,
-  });
+  const { data } = await sdk.medusa.updateCart({ id: main.cart.id, body });
 
-  main.setPickupCart(pickup.data.cart);
-  main.setDeliveryCart(delivery.data.cart);
+  main.setCart(data.cart);
 };
 
 //When the checkout page is loaded, we:
